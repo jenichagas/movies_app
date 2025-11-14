@@ -1,6 +1,11 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    
-}
+// STYLES
+@use "../styles/base";
+@use "../styles/variables";
+@use "../styles/mixins";
+
+// COMPONENTS
+@use "../components/NavBar/NavBar.module.scss";
+@use "../components/Footer/Footer.module.scss";
+@use "../components/CardGrid/CardGrid.module.scss";
+@use "../components/Logo/Logo.module.scss";
+
