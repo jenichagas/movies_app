@@ -7,7 +7,7 @@ export default function Logo() {
       <Image
         src="/logo-inline.png"
         alt="Logo"
-        width={150}
+        width={170}
         height={30}
         loading="eager"
         className={styles.logo}
