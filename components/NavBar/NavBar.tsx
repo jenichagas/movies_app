@@ -1,7 +1,10 @@
+import style from "./NavBar.module.scss";
+import Logo from "@/components/Logo";
+
 export default function NavBar() {
   return (
-    <div className="nav-bar">
-      <h1 className="nav-title">CINE BOX</h1>
+    <div className={style.navBar}>
+      <Logo />
     </div>
   );
 }

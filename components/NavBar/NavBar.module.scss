@@ -1,0 +1,9 @@
+.navBar {
+  background: var(--primary-color);
+  padding: 0.5rem 3rem;
+  border-bottom: solid 1px #1f0b30;
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+  }
+}
