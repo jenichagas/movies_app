@@ -21,7 +21,6 @@ async function getMovies(): Promise<MovieProps[]> {
 
 export default async function Home() {
   const movies = await getMovies();
-  console.log('Filmes recebidos na página antes de passar para o Grid:', movies);
 
   return (
     <div className="">
