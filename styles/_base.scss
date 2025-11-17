@@ -6,5 +6,19 @@
 
 body {
   background: var(--secondary-color);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+  margin-top: 10px;
 }

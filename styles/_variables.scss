@@ -1,4 +1,11 @@
 :root {
-  --primary-color: linear-gradient(#08091d, #0f1629);
+  --primary-color: linear-gradient(hsl(237, 57%, 7%), #0f1629);
   --secondary-color: #030412;
+  --white-color: #f1f5f9;
+
+  //BUTTONS
+
+  --btn-primary-color: #482250;
+  --btn-danger: rgb(195, 55, 36);
+  --btn-success: rgb(2, 171, 75);
 }
