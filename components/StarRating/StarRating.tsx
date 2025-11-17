@@ -1,5 +1,6 @@
 import { TiStarFullOutline } from "react-icons/ti";
 import { TiStarOutline } from "react-icons/ti";
+import style from "./StarRating.module.scss"
 
 export interface StarRatingProps {
   rating: number;
@@ -18,12 +19,12 @@ export default function StarRating(Props: StarRatingProps) {
     }
   }
   return (
-    <div>
+    <div className={style.starRate}>
       {fullStars.map((index) => (
-        <TiStarFullOutline />
+        <TiStarFullOutline key={index} />
       ))}
       {emptyStars.map((index) => (
-        <TiStarOutline />
+        <TiStarOutline key={index} />
       ))}
     </div>
   );
