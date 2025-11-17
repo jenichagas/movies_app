@@ -4,6 +4,13 @@ export interface MovieProps {
   overview:string
   poster_path: string;
   vote_average: number;
+  vote_count: number;
+  release_date: number,
+  adult: boolean,
+  backdrop_path: string,
+  genre_ids: number[],
+  original_language: string,
+
 }
 
 export interface ApiMovieResponse {
