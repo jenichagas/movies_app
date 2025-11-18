@@ -1,0 +1,53 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--secondary-color);
+  font-family: "Poppins", sans-serif;
+  color: var(--white-color);
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding:  8px;
+  outline: none;
+  width: 100%;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+p {
+  font-size: clamp(0.85rem, 1vw, 0.85rem);
+}
+
+small {
+  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+}

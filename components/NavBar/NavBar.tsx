@@ -1,7 +1,18 @@
+import style from "./NavBar.module.scss";
+import Logo from "@/components/Logo";
+import Link from "next/link";
+import { TiHomeOutline } from "react-icons/ti";
+
 export default function NavBar() {
   return (
-    <div className="nav-bar">
-      <h1 className="nav-title">CINE BOX</h1>
+    <div className={style.navBar}>
+      <Logo />
+      <Link href="/">
+        <div className={style.links}>
+          <TiHomeOutline />
+          Início
+        </div>
+      </Link>
     </div>
   );
 }

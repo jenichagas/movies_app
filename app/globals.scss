@@ -1,6 +1,7 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    
-}
+// STYLES
+@use "../styles/base";
+@use "../styles/variables";
+@use "../styles/mixins";
+
+// STYLE COMPONENTS
+@use "../styles/buttons.scss";

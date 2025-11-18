@@ -1,0 +1,23 @@
+.navBar {
+  user-select: none;
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  background: var(--primary-color);
+  padding: 0.7rem 3rem;
+  border-bottom: solid 1px #1f0b30;
+
+  .links {
+    display: flex;
+    font-weight: 500;
+    gap: 0.3rem;
+    color: var(--white-color);
+
+    svg {
+      vertical-align: bottom;
+    }
+  }
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+  }
+}

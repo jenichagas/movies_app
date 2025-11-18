@@ -1,0 +1,41 @@
+.searchContainer {
+  user-select: none;
+  display: flex;
+  width: 50%;
+  border-radius: 30px;
+  border: 1px solid var(--white-color);
+  padding: 0.2rem;
+  cursor: pointer;
+  margin-right: 15px;
+
+  svg {
+    color: var(--white-color);
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+  }
+
+  button {
+    border-left: 1px solid var(--white-color);
+  }
+
+  @media (max-width: 768px) {
+    width: 96%;
+    padding: 0.1rem;
+    margin-right: 0;
+
+    button {
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    width: 96%;
+    padding: 0.1rem;
+    margin-right: 0;
+
+    button {
+      font-size: 0.75rem;
+    }
+  }
+}
