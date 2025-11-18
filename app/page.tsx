@@ -1,6 +1,6 @@
 import MovieGrid from "@/components/MovieGrid";
 import type { ApiMovieResponse, MovieProps } from "@/app/types";
-
+import HeroSection from "../components/HeroSection";
 
 async function getMovies(): Promise<MovieProps[]> {
   const baseUrl = "https://api.themoviedb.org/3/discover/movie";
@@ -24,7 +24,13 @@ export default async function Home() {
 
   return (
     <div className="">
-      <MovieGrid movies={movies} />
+      <div>
+        <HeroSection />
+      </div>
+      <div>
+        <MovieGrid movies={movies} />
+      </div>
     </div>
   );
 }
+
