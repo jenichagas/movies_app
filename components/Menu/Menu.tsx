@@ -2,11 +2,15 @@ import MenuList from "../MenuList";
 import Search from "../Search";
 import styles from "./Menu.module.scss";
 
-export default function Menu() {
+interface MenuProps {
+  onSearch: (query: string) => void;
+}
+
+export default function Menu({ onSearch }: MenuProps) {
   return (
     <div className={styles.menu}>
       <MenuList />
-      <Search />
+      <Search onSearch={onSearch} />
     </div>
   );
 }
