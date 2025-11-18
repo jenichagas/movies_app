@@ -10,7 +10,7 @@ export default function NavBar() {
       <Link href="/">
         <div className={style.links}>
           <TiHomeOutline />
-          <p>Início</p>
+          Início
         </div>
       </Link>
     </div>
