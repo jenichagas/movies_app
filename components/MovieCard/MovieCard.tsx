@@ -23,7 +23,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
     <div className={styles.movieCard}>
       {movie.vote_average === 0 && (
         <div className={styles.badge}>
-          <span>Adicionado recente</span>
+          <small>Adicionado recente</small>
         </div>
       )}
       <div className={styles.poster}>
