@@ -11,20 +11,20 @@ export default function MenuList() {
         <PiFilmSlateBold />
         <p>Filmes</p>
       </div>
-      |
+      {/* | */}
       <div className={styles.menuItem}>
         <BiCameraMovie />
         <p>Séries</p>
       </div>
-      |
+      {/* | */}
       <div className={styles.menuItem}>
         <TbStars />
-        <p>Mais populares</p>
+        <p>Populares</p>
       </div>
-      |
+      {/* | */}
       <div className={styles.menuItem}>
         <MdOutlineWidgets />
-        <p>Mais recentes</p>
+        <p>Adicionados recentes</p>
       </div>
     </div>
   );
