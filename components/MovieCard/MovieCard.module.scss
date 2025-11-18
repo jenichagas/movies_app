@@ -1,4 +1,5 @@
 .movieCard {
+  user-select: none;
   color: var(--white-color);
   width: 100%;
   aspect-ratio: 2 / 3;
@@ -98,6 +99,9 @@
 
     .title {
       margin-bottom: 6px;
+    }
+    .overview {
+      font-size: 0.75rem;
     }
     .overviewHidden {
       height: 0;

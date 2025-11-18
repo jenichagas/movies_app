@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import styles from "./MovieCard.module.scss";
 import { MovieProps } from "@/app/types";
 import { useState } from "react";
+import Link from "next/link";
 
 const StarRating = dynamic(() => import("../StarRating"), {
   ssr: false,
@@ -69,7 +70,9 @@ export default function MovieCard({ movie }: MovieCardProps) {
                 : movie.overview
               : "Sinopse não disponível."}
           </p>
-          <button className="primary-btn">Ver mais</button>
+          <Link href={`/${movie.id}`}>
+            <button className="primary-btn">Ver mais</button>
+          </Link>
         </div>
       </div>
     </div>
