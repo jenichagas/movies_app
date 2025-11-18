@@ -20,5 +20,13 @@ button {
   cursor: pointer;
   padding: 6px 8px;
   border-radius: 4px;
-  margin-top: 10px;
+}
+
+input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding:  8px;
+  outline: none;
+  width: 100%;
 }
