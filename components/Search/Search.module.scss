@@ -1,9 +1,10 @@
 .searchContainer {
+  user-select: none;
   display: flex;
   width: 50%;
   border-radius: 30px;
   border: 1px solid var(--white-color);
-  padding: 0.5rem;
+  padding: 0.2rem;
   cursor: pointer;
   margin-right: 15px;
 
