@@ -19,13 +19,13 @@ export default function PageClient({ initialMovies }: PageClientProps) {
     const trimmedQuery = query.trim();
     setHasSearched(trimmedQuery !== "");
 
+    let moviesData: MovieProps[] = [];
     if (trimmedQuery !== "") {
-      const results = await searchMovies(trimmedQuery);
-      setMovies(results);
+      moviesData = await searchMovies(trimmedQuery);
     } else {
-      const popularMovies = await getPopulateMovies();
-      setMovies(popularMovies);
+      moviesData = await getPopulateMovies();
     }
+    setMovies(moviesData);
   };
 
   return (

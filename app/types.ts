@@ -5,7 +5,7 @@ export interface MovieProps {
   poster_path: string;
   vote_average: number;
   vote_count: number;
-  release_date: number,
+  release_date: string,
   adult: boolean,
   backdrop_path: string,
   genre_ids: number[],
