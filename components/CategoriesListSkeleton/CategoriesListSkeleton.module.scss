@@ -1,0 +1,30 @@
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.skeletonSection {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+
+    li {
+      width: 150px;
+      height: 50px; // Matches the padding and line-height of the real items
+      border-radius: 0.5rem;
+      background-color: #1f1f1f;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  }
+}

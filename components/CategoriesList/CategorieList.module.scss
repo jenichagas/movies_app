@@ -1,0 +1,103 @@
+.categorieSection {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+
+    li {
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      background: var(--primary-color);
+      user-select: none;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: var(--secondary-color);
+      }
+    }
+  }
+}
+
+.dropdownContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.arrowIcon {
+  display: inline-block;
+  transform: rotate(-90deg);
+  transition: transform 0.3s ease-in-out;
+}
+
+.arrowOpen {
+  transform: rotate(90deg);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background-color: var(--secondary-color);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 10;
+  min-width: 200px;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  li {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    white-space: normal;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    background: none !important; // Force override
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2) !important; // Ensure hover also overrides
+    }
+  }
+
+  // Custom Scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--white-color);
+  }
+}
+
+.dropdownOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}

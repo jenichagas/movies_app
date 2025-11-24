@@ -6,6 +6,9 @@ import HeroSection from "@/components/HeroSection";
 import MovieGrid from "@/components/MovieGrid";
 import NotFound from "@/components/NotFound";
 import { getPopulateMovies, searchMovies } from "./page";
+import MenuList from "@/components/MenuList";
+import styles from "./PageClient.module.scss";
+import CategorieList from "@/components/CategoriesList";
 
 interface PageClientProps {
   initialMovies: MovieProps[];
@@ -30,8 +33,14 @@ export default function PageClient({ initialMovies }: PageClientProps) {
 
   return (
     <div className="">
+      <div className={styles.menuList}>
+        <MenuList onSearch={handleSearch} />
+      </div>
       <div>
         <HeroSection onSearch={handleSearch} />
+      </div>
+      <div>
+        <CategorieList />
       </div>
       <div>
         {hasSearched && movies.length === 0 ? (

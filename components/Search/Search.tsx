@@ -1,19 +1,15 @@
 "use client";
 import styles from "./Search.module.scss";
-import { IoSearchCircleSharp } from "react-icons/io5";
-import { useEffect, useState } from "react";
+import { IoSearch } from "react-icons/io5";
+import { useState } from "react";
 
 interface SearchProps {
   onSearch: (query: string) => void;
 }
 
 export default function Search({ onSearch }: SearchProps) {
-  const [isMounted, setIsMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const handleSearch = () => {
     onSearch(query);
@@ -26,8 +22,9 @@ export default function Search({ onSearch }: SearchProps) {
   };
 
   return (
-    <div className={styles.searchContainer}>
-      {isMounted && <IoSearchCircleSharp />}
+    <div
+      className={`${styles.searchContainer} ${isOpen ? styles.searchOpen : ""}`}
+    >
       <input
         type="text"
         placeholder="Pesquise por um filme ou uma série..."
@@ -35,7 +32,9 @@ export default function Search({ onSearch }: SearchProps) {
         onChange={(event) => setQuery(event.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <button onClick={handleSearch}>Pesquisar</button>
+      <div className={styles.searchIcon} onClick={() => setIsOpen(!isOpen)}>
+        <IoSearch />
+      </div>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import CardSkeleton from '../CardSkeleton';
 import gridStyles from '../MovieGrid/MovieGrid.module.scss';
 
 export default function MovieGridSkeleton() {
-  const skeletonCount = 12;
+  const skeletonCount = 8;
 
   return (
     <div className={gridStyles.movieGrid} >

@@ -39,5 +39,9 @@ export async function searchMovies(query: string): Promise<MovieProps[]> {
 export default async function Home() {
   const initialMovies = await getPopulateMovies();
 
-  return <PageClient initialMovies={initialMovies} />;
+  return (
+    <div>
+      <PageClient initialMovies={initialMovies} />
+    </div>
+  );
 }
