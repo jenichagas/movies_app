@@ -1,0 +1,28 @@
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.trigger {
+  cursor: pointer;
+}
+
+.panel {
+  position: absolute;
+  bottom: -10rem;
+  right: -10;
+  margin-top: 0.5rem;
+  z-index: 50;
+  min-width: 200px;
+
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.panelOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
