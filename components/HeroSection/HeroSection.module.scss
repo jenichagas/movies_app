@@ -7,11 +7,11 @@
 
   .heroContent {
     border-radius: 18px;
-    height: 400px;
+    height: 300px;
     width: 100%;
     position: relative;
 
-    img {
+    .heroVideo {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -30,8 +30,8 @@
       height: 100%;
       background: linear-gradient(
         to top,
-        rgba(10, 5, 20, 0.95) 0%,
-        rgba(10, 5, 20, 0.6) 100%
+        rgba(10, 5, 20, 0.366) 0%,
+        rgba(10, 5, 20, 0.36) 100%
       );
       border-radius: 18px;
       z-index: 1;
@@ -44,5 +44,28 @@
   @media (max-width: 768px) {
     margin: 0;
     padding: 0;
+  }
+
+  .actions {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 19rem;
+    left: 4rem;
+
+    gap: 1rem;
+    padding: 0 20px;
+    // margin: 1rem;
+    z-index: 2;
+
+    button {
+      background: var(--white-color);
+      color: rgb(0, 0, 0);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+    }
   }
 }
