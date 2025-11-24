@@ -1,11 +1,12 @@
 .menuList {
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   color: var(--white-color);
   gap: 1.5rem;
   padding: 0rem 3rem;
-  padding-right: 0 ;
+  padding-right: 0;
   border-radius: 25px;
   background: rgba(240, 255, 255, 0.086);
 
@@ -13,13 +14,45 @@
     user-select: none;
     cursor: pointer;
     transition: opacity 0.3s ease-in-out;
+    padding-bottom: 0.2rem;
+    transition: all 0.3s ease-in-out;
 
     &:hover {
       opacity: 0.8;
     }
+
+    &.active {
+      font-weight: bold;
+      color: var(--btn-primary-color);
+    }
+  }
+  .menuItemsContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--btn-primary-color), transparent);
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
   }
 
   @media (max-width: 768px) {
-    gap: 1rem;
+    .menuList {
+      gap: 1rem;
+    }
+    .menuItemsContainer {
+      gap: 1rem;
+    }
+  }
+  @media (max-width: 480px) {
+    .menuList {
+      padding: 0rem 1rem;
+      gap: 0.5rem;
+    }
   }
 }
