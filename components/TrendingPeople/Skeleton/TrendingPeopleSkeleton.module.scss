@@ -1,0 +1,62 @@
+.peopleContainer {
+  padding: 1rem;
+  background-color: #222;
+  border-radius: 12px;
+  height: 100%;
+  max-height: 1200px;
+
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--white-color);
+    text-align: center;
+  }
+}
+
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.personSkeleton {
+  display: flex;
+  flex-direction: column !important;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.personImageSkeleton {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #333;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.personInfoSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.personNameSkeleton {
+  width: 100px;
+  height: 1rem;
+  background-color: #333;
+  border-radius: 4px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}

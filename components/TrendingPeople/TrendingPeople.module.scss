@@ -1,0 +1,44 @@
+.peopleContainer {
+  padding: 1rem;
+  background-color: #222;
+  border-radius: 12px;
+  height: 100%;
+
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--white-color);
+    text-align: center;
+  }
+
+  .slick-slider,
+  .slick-list,
+  .slick-track {
+    height: 100%;
+  }
+
+  .person {
+    display: flex !important;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #333;
+    }
+  }
+
+  .personImage {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .personInfo {
+    color: var(--white-color);
+    strong {
+      font-size: 0.9rem;
+    }
+  }
+}
