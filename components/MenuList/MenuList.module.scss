@@ -23,7 +23,7 @@
 
     &.active {
       font-weight: bold;
-      color: var(--btn-primary-color);
+      color: var(--secondary-color);
     }
   }
   .menuItemsContainer {
@@ -37,7 +37,7 @@
     position: absolute;
     bottom: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--btn-primary-color), transparent);
+    background: linear-gradient(90deg, var(--secondary-color), transparent);
     transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
   }
 

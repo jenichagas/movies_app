@@ -1,0 +1,59 @@
+.menuSkeleton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+
+}
+
+.menuSkeletonContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0rem 3rem;
+  border-radius: 25px;
+  background: rgba(240, 255, 255, 0.086);
+  height: 50px;
+  max-width:40rem;
+  z-index: 1;
+
+}
+
+.menuItems {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.menuItemSkeleton {
+  width: 55px;
+  height: 1.5rem;
+  background-color: #222;
+  border-radius: 18px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.searchSkeleton {
+  position: absolute;
+  z-index: 2;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  background-color: #222;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
