@@ -12,6 +12,16 @@ export interface MovieProps {
   genres?: { id: number; name: string }[];
   runtime?: number;
   tagline?: string;
+  production_companies: {
+    id: number;
+    name: string;
+    logo_path: string | null;
+  }[];
+}
+
+export interface Genre {
+  id: number;
+  name: string;
 }
 
 export interface ApiMovieResponse {
@@ -26,5 +36,3 @@ export interface ApiSeriesResponse {
   total_pages: number;
   total_results: number;
 }
-
-
