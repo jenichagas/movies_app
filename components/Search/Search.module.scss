@@ -8,9 +8,8 @@
   border: 1px solid transparent;
 
   input {
-
     &::placeholder {
-      color: #ccc;
+      color: var(--placeholder-color);
       font-size: 0.7rem;
     }
   }
@@ -45,12 +44,12 @@
 .searchOpen {
   gap: 0.5rem;
   padding: 0.2rem 0.5rem;
-  border: 1px solid #ffffff88;
+  border: 1px solid var(--secondary-color);
   backdrop-filter: blur(10px);
   background-color: rgba(31, 31, 31, 0.5);
 
   input {
-    padding-left: .5rem;
+    padding-left: 0.5rem;
     opacity: 1;
     width: 250px;
     background: transparent;
@@ -62,5 +61,10 @@
     opacity: 1;
     width: auto;
     padding: 0.5rem 1rem;
+  }
+
+  &:hover {
+    box-shadow: 0 0 1em 0 var(--secondary-color-hover);
+    transition: 0.4s;
   }
 }
