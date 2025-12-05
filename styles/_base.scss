@@ -4,10 +4,21 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   background: var(--secondary-color);
   font-family: "Poppins", sans-serif;
   color: var(--white-color);
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 li {
@@ -27,7 +38,7 @@ input {
   background: transparent;
   border: none;
   color: #fff;
-  padding:  8px;
+  padding: 8px;
   outline: none;
   width: 100%;
 }
