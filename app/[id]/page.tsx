@@ -1,5 +1,8 @@
 import { MovieProps } from "../types";
 import styles from "./Film.module.scss";
+import TrendingPeople from "@/components/TrendingPeople";
+import FilmDetails from "./FilmDetails";
+import SimilarMovies from "@/components/SimilarMovies";
 
 async function getMovieDetails(id: string): Promise<MovieProps> {
   const baseUrl = `https://api.themoviedb.org/3/movie/${id}`;
@@ -12,43 +15,37 @@ async function getMovieDetails(id: string): Promise<MovieProps> {
   });
 
   const response = await fetch(`${baseUrl}?${params.toString()}`);
-
   if (!response.ok) {
     const errorBody = await response.json().catch(() => null);
     console.error("API Error Response:", errorBody);
-    throw new Error(
-      `Erro ao buscar detalhes do filme. Status: ${response.status}. Mensagem: ${
-        errorBody?.status_message || response.statusText
-      }`
-    );
+    let errorMessage = `Erro ao buscar detalhes do filme. Status: ${response.status}.`;
+    if (errorBody && errorBody.status_message) {
+      errorMessage += ` Mensagem: ${errorBody.status_message}`;
+    } else {
+      errorMessage += ` Mensagem: ${response.statusText}. Verifique se a chave da API (NEXT_PUBLIC_API_KEY) está configurada corretamente.`;
+    }
+    throw new Error(errorMessage);
   }
 
-  return response.json();
+  const data = await response.json();
+  return data;
 }
 
-export default async function Film(props: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function Film(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const movie = await getMovieDetails(params.id);
-  const imageBaseUrl = "https://image.tmdb.org/t/p/original";
 
   return (
     <div className={styles.filmContainer}>
-      <div className={styles.poster}>
-        <img src={`${imageBaseUrl}${movie.poster_path}`} alt={movie.title} />
-      </div>
-      <div className={styles.details}>
-        <h1>{movie.title}</h1>
-        <p className={styles.overview}>{movie.overview}</p>
-        <div className={styles.info}>
-          <span>Nota: {movie.vote_average.toFixed(1)}</span>
-          <span>
-            Lançamento:{" "}
-            {new Date(movie.release_date).toLocaleDateString("pt-BR")}
-          </span>
+      <div className={styles.mainContent}>
+        <FilmDetails movie={movie} />
+        <div className={styles.similarSection}>
+          <SimilarMovies movieId={params.id} />
         </div>
       </div>
+      <aside className={styles.sidebar}>
+        <TrendingPeople />
+      </aside>
     </div>
   );
 }
