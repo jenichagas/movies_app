@@ -1,5 +1,6 @@
 "use client";
 
+import { MdOutlineFavorite } from "react-icons/md";
 import Logo from "@/components/Logo";
 import Dropdown from "../Dropdown";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
@@ -8,6 +9,33 @@ import userMascot from "@/public/user-mascot.json";
 import { useRef, useState } from "react";
 import style from "./NavBar.module.scss";
 import Link from "next/link";
+
+interface SettingsMenuProps {
+  closeDropdown?: () => void;
+}
+
+const SettingsMenu = ({ closeDropdown }: SettingsMenuProps) => {
+  const handleClick = () => {
+    if (closeDropdown) {
+      closeDropdown();
+    }
+  };
+
+  return (
+    <div className={style.settingsMenu}>
+      <Link href="#" onClick={handleClick}>
+        <p>Perfil</p>
+      </Link>
+      <Link href="#" onClick={handleClick}>
+        <p>Minha Lista</p>{" "}
+      </Link>
+      <hr />
+      <Link href="#" onClick={handleClick}>
+        <p>Sair</p>
+      </Link>
+    </div>
+  );
+};
 
 export default function NavBar() {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
@@ -31,6 +59,7 @@ export default function NavBar() {
   return (
     <div className={style.navBar}>
       <Logo />
+
       <div className={style.actions}>
         <div className={style.userName}>Olá, Jeniffer!</div>
         <div
@@ -46,14 +75,19 @@ export default function NavBar() {
             onComplete={handleAnimationComplete}
           />
         </div>
-        <div className={style.settingsIcon}>
-          <Dropdown trigger={() => <IoSettings />}>
-            <div className={style.settingsMenu}>
-              <Link href="#"><p>Perfil</p></Link>
-              <Link href="#"><p>Minha Lista</p> </Link>
-              <hr />
-              <Link href="#"><p>Sair</p></Link>
-            </div>
+        <div>
+          <Link href="/">
+            <p className={style.favMovies}>
+              <MdOutlineFavorite />
+              Favoritos
+            </p>
+          </Link>
+        </div>
+        <div>
+          <Dropdown
+            trigger={() => <IoSettings className={style.settingsIcon} />}
+          >
+            <SettingsMenu />
           </Dropdown>
         </div>
       </div>
