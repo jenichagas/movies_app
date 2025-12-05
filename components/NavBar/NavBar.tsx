@@ -9,6 +9,9 @@ import userMascot from "@/public/user-mascot.json";
 import { useRef, useState } from "react";
 import style from "./NavBar.module.scss";
 import Link from "next/link";
+import { PiListHeart } from "react-icons/pi";
+import { RiLogoutCircleLine } from "react-icons/ri";
+import { CgProfile } from "react-icons/cg";
 
 interface SettingsMenuProps {
   closeDropdown?: () => void;
@@ -24,14 +27,17 @@ const SettingsMenu = ({ closeDropdown }: SettingsMenuProps) => {
   return (
     <div className={style.settingsMenu}>
       <Link href="#" onClick={handleClick}>
-        <p>Perfil</p>
+        <p><CgProfile /> Perfil</p>
       </Link>
       <Link href="#" onClick={handleClick}>
-        <p>Minha Lista</p>{" "}
+        <p>
+          {" "}
+          <PiListHeart /> Minha Lista
+        </p>{" "}
       </Link>
       <hr />
       <Link href="#" onClick={handleClick}>
-        <p>Sair</p>
+        <p><RiLogoutCircleLine /> Sair</p>
       </Link>
     </div>
   );
@@ -76,12 +82,10 @@ export default function NavBar() {
           />
         </div>
         <div>
-          <Link href="/">
-            <p className={style.favMovies}>
-              <MdOutlineFavorite />
-              Favoritos
-            </p>
-          </Link>
+          <button className={style.favMovies}>
+            <PiListHeart />
+            Minha lista
+          </button>
         </div>
         <div>
           <Dropdown

@@ -48,22 +48,29 @@
       display: flex;
       align-items: center;
       font-size: 1rem;
-
+      border: 1px solid var(--secondary-color);
       gap: 0.5rem;
       padding: 0.3rem 1.1rem;
       border-radius: 18px;
       color: var(--white-color);
       background: var(--primary-color);
+      transition: 0.4s all ease-in-out;
 
       svg {
         font-size: 1.8rem;
         background-color: var(--secondary-color);
         padding: 0.3rem;
-        border-radius: 9px;
+        border-radius: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
+      }
+
+      &:hover {
+        &:hover {
+          box-shadow: 0 0 1em 0 var(--secondary-color-hover);
+        }
       }
     }
 
@@ -71,7 +78,7 @@
       font-size: 1.8rem;
       background: var(--secondary-color);
       padding: 0.3rem;
-      border-radius: 50%;
+      border-radius: 18px;
       vertical-align: middle;
     }
 
@@ -81,8 +88,13 @@
       padding: 0.5rem;
       display: flex;
       flex-direction: column;
+      justify-items: center;
       gap: 0.5rem;
       border: 1px solid #3a3a3a;
+      svg {
+        vertical-align: text-bottom;
+        margin-right: 0.6rem;
+      }
 
       a {
         padding: 0.5rem 1rem;
