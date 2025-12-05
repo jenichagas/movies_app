@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+
 import "./globals.scss";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "CINE BOX",
@@ -15,8 +16,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <NavBar />
-        {children}
+        <main>
+          <NavBar />
+          {children}
+        </main>
+        <div id="portal-root"></div>
+        <Footer />
       </body>
     </html>
   );

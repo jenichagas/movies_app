@@ -1,0 +1,80 @@
+@import "@/styles/variables";
+
+.footer {
+  background-color: var(--secondary-color);
+  color: var(--white-color);
+  padding: 4rem 2rem 2rem;
+  border-top: 1px solid var(--gray-border-color);
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--gray-border-color);
+}
+
+.logoSocial {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 1rem;
+
+  a {
+    color: var(--white-color);
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--soft-red-color);
+    }
+  }
+}
+
+.links {
+  display: flex;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.linkColumn {
+  h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--white-color);
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--white-color);
+    }
+  }
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 2rem;
+  color: #ccc;
+  font-size: 0.9rem;
+}
