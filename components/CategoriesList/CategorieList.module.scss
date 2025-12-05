@@ -95,9 +95,17 @@
   color: var(--white-color);
   transition: background-color 0.3s;
   padding-bottom: 5px;
+  transition: all 0.5s ease-in-out;
+  svg {
+    vertical-align: middle;
+    margin-right: 0.3rem;
+    width: .8rem;
+    height: .8rem;
+    transition: all 0.5s ease-in-out;
+  }
 
   &:hover {
-    background-color: var(--secondary-color);
+    color: var(--secondary-color);
   }
 }
 
@@ -114,9 +122,9 @@
 .dropdownMenu {
   position: absolute;
   top: -9rem;
-  left: 3rem;
+  left: 1rem;
   z-index: 1;
-  background-color: var(--secondary-color);
+  background-color: var(--background-color);
   border-radius: 0.5rem;
   padding: 0.5rem;
   display: flex;
@@ -124,6 +132,7 @@
   gap: 0.5rem;
   border: 1px solid #3a3a3a;
   max-height: 250px;
+  min-width: 12rem;
   overflow: auto;
   transition: all 0.5s ease-in-out;
 
@@ -138,10 +147,22 @@
     &:hover {
       background-color: var(--secondary-color);
       transition: 0.5s all ease-in-out;
+      svg {
+        fill: var(--white-color);
+      }
     }
   }
 }
+.iconList {
+  vertical-align: middle;
+  color: var(--secondary-color);
+  margin-right: 1rem;
+  transition: all 0.5s ease-in-out;
 
+  &.title {
+    margin-right: 0.2rem;
+  }
+}
 .active {
   border: 3rem solid var(--secondary-color);
   transition: all 0.5s ease-in-out;

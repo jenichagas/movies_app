@@ -5,6 +5,9 @@ import styles from "./CategorieList.module.scss";
 import Image from "next/image";
 import Dropdown from "../Dropdown/Dropdown";
 import { Genre } from "@/app/types";
+import { PiListHeart } from "react-icons/pi";
+import { FaListUl } from "react-icons/fa";
+import { LiaGripLinesSolid } from "react-icons/lia";
 
 const FEATURED_CATEGORIES_META = {
   28: { image: "/acao-category.png", color: "#b71616f3" },
@@ -18,7 +21,6 @@ const FEATURED_CATEGORIES_META = {
 interface CategorieListProps {
   genres: Genre[];
 }
-
 
 interface DropdownListProps {
   genres: Genre[];
@@ -49,6 +51,7 @@ const DropdownList = ({
             : ""
         }
       >
+        <LiaGripLinesSolid className={styles.iconList} />
         {category.name}
       </li>
     ))}
@@ -127,7 +130,10 @@ export default function CategorieList({ genres }: CategorieListProps) {
           <Dropdown
             trigger={(isOpen) => (
               <div className={styles.moreButton}>
-                <span>Mais</span>
+                <span>
+                  {" "}
+                  <FaListUl /> Mais
+                </span>
                 <span
                   className={`${styles.arrowIcon} ${
                     isOpen ? styles.arrowOpen : ""
