@@ -1,0 +1,192 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: background-color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.overlayVisible {
+  background-color: rgba(0, 0, 0, 0.85);
+  opacity: 1;
+}
+
+.playerContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.playerVisible {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: rgb(255, 255, 255);
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  height: 100%;
+
+  .title {
+    background: #000000a0;
+    width: 100%;
+    height: 4rem;
+    position: absolute;
+    top: 10%;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    left: 10%;
+    color: white;
+    font-weight: 100;
+    transition: opacity 0.5s ease-in-out;
+
+    h4 {
+      margin: 1rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  .controlHidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .lockOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 15;
+  }
+
+  .toggleLockButton {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    background-color: rgba(36, 36, 36, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    color: white;
+    transition: opacity 0.5s ease-in-out;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background-color: rgba(57, 57, 57, 0.7);
+    }
+  }
+
+  .brightnessControl {
+    position: absolute;
+    top: 50%;
+    right: 11%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(36, 36, 36, 0.5);
+    padding: 15px 10px;
+    border-radius: 10px;
+    gap: 15px;
+    color: white;
+    transition: opacity 0.5s ease-in-out;
+
+    .sliderContainer {
+      width: 20px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+      transform: rotate(-90deg);
+      width: 120px;
+    }
+
+    input[type="range"]::-webkit-slider-runnable-track {
+      background: rgba(255, 255, 255, 0.4);
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      margin-top: -6.5px;
+      background-color: #fff;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+    }
+  }
+
+  .titleHidden {
+    opacity: 0;
+  }
+
+  video {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 0.1rem solid #ffffff1b;
+    box-shadow: 0 0 10px rgba(92, 92, 92, 0.317);
+  }
+}
