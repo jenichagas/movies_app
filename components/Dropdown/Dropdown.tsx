@@ -1,6 +1,13 @@
 "use client";
 
-import { useState, useRef, useEffect, ReactNode } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  ReactNode,
+  cloneElement,
+  isValidElement,
+} from "react";
 import styles from "./Dropdown.module.scss";
 
 interface DropdownProps {
@@ -12,10 +19,17 @@ export default function Dropdown({ trigger, children }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        closeDropdown();
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -30,7 +44,15 @@ export default function Dropdown({ trigger, children }: DropdownProps) {
         {trigger(isOpen)}
       </div>
       <div className={`${styles.panel} ${isOpen ? styles.panelOpen : ""}`}>
-        {children}
+        {React.Children.map(children, (child) => {
+          if (isValidElement(child)) {
+            return cloneElement(
+              child,
+              { closeDropdown } as { closeDropdown: () => void }
+            );
+          }
+          return child;
+        })}
       </div>
     </div>
   );
