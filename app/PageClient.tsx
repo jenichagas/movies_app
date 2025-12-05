@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import type { MovieProps } from "@/app/types";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import type { MovieProps, Genre } from "@/app/types";
 import HeroSection from "@/components/HeroSection";
 import MovieGrid from "@/components/MovieGrid";
 import NotFound from "@/components/NotFound";
@@ -18,12 +19,34 @@ import CategorieList from "@/components/CategoriesList";
 
 interface PageClientProps {
   initialMovies: MovieProps[];
+  genres: Genre[];
+  initialActiveMenu: string;
 }
 
-export default function PageClient({ initialMovies }: PageClientProps) {
+export default function PageClient({
+  initialMovies,
+  genres,
+  initialActiveMenu,
+}: PageClientProps) {
   const [movies, setMovies] = useState<MovieProps[]>(initialMovies);
   const [hasSearched, setHasSearched] = useState(false);
-  const [activeMenu, setActiveMenu] = useState("filmes");
+  const [activeMenu, setActiveMenu] = useState(initialActiveMenu);
+
+  const searchParams = useSearchParams();
+  const categoryId = searchParams.get("category");
+
+  useEffect(() => {
+    const fetchMoviesByCategory = async () => {
+      if (categoryId) {
+        const moviesData = await getPopulateMovies(categoryId);
+        setMovies(moviesData);
+        setHasSearched(false);
+        setActiveMenu("");
+      }
+    };
+
+    fetchMoviesByCategory();
+  }, [categoryId]);
 
   const handleSearch = async (query: string) => {
     const trimmedQuery = query.trim();
@@ -78,10 +101,10 @@ export default function PageClient({ initialMovies }: PageClientProps) {
         />
       </div>
       <div>
-        {/* <HeroSection /> */}
+        <HeroSection />
       </div>
       <div>
-        <CategorieList />
+        <CategorieList genres={genres} />
       </div>
       <div>
         {hasSearched && movies.length === 0 ? (

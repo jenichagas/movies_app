@@ -1,11 +1,12 @@
 import type {
   ApiMovieResponse,
   MovieProps,
-  ApiSeriesResponse,
 } from "@/app/types";
 import PageClient from "./PageClient";
 
-export async function getPopulateMovies(): Promise<MovieProps[]> {
+export async function getPopulateMovies(
+  genreId?: string
+): Promise<MovieProps[]> {
   const baseUrl = "https://api.themoviedb.org/3/discover/movie";
   if (!process.env.NEXT_PUBLIC_API_KEY) {
     throw new Error("API_KEY não encontrada");
@@ -14,6 +15,11 @@ export async function getPopulateMovies(): Promise<MovieProps[]> {
     api_key: process.env.NEXT_PUBLIC_API_KEY,
     language: "pt-BR",
   });
+
+  if (genreId) {
+    params.append("with_genres", genreId);
+  }
+
   const response = await fetch(`${baseUrl}?${params.toString()}`, {
     cache: "no-store",
   });
@@ -80,18 +86,31 @@ export async function getTvSeries(): Promise<MovieProps[]> {
   }
   const data = await response.json();
 
-  // Adapta a resposta da API de séries para a estrutura de MovieProps
-  const adaptedResults: MovieProps[] = data.results.map((series: any) => ({
-    id: series.id,
-    title: series.name, // Mapeia name para title
-    overview: series.overview,
-    poster_path: series.poster_path,
-    vote_average: series.vote_average,
-    vote_count: series.vote_count,
-    release_date: series.first_air_date, 
-    genre_ids: series.genre_ids,
-    original_language: series.original_language,
-  }));
+  interface ApiTvSeries {
+    id: string;
+    name: string;
+    overview: string;
+    poster_path: string;
+    vote_average: number;
+    vote_count: number;
+    first_air_date: string;
+    genre_ids: number[];
+    original_language: string;
+  }
+
+  const adaptedResults: MovieProps[] = data.results.map(
+    (series: ApiTvSeries) => ({
+      id: series.id,
+      title: series.name,
+      overview: series.overview,
+      poster_path: series.poster_path,
+      vote_average: series.vote_average,
+      vote_count: series.vote_count,
+      release_date: series.first_air_date,
+      genre_ids: series.genre_ids,
+      original_language: series.original_language,
+    })
+  );
 
   return adaptedResults;
 }
@@ -133,12 +152,42 @@ export async function getCinemaMovies() {
   return data.results;
 }
 
-export default async function Home() {
-  const initialMovies = await getPopulateMovies();
+export async function getGenres() {
+  const baseUrl = "https://api.themoviedb.org/3/genre/movie/list";
+  if (!process.env.NEXT_PUBLIC_API_KEY) {
+    throw new Error("API_KEY não encontrada");
+  }
+  const params = new URLSearchParams({
+    api_key: process.env.NEXT_PUBLIC_API_KEY,
+    language: "pt-BR",
+  });
+  const response = await fetch(`${baseUrl}?${params.toString()}`, {
+    cache: "no-store",
+  });
+  if (!response.ok) {
+    throw new Error("Erro ao buscar gêneros");
+  }
+  const data = await response.json();
+  return data.genres;
+}
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const categoryId = (await searchParams)?.category as string | undefined;
+  const initialMovies = await getPopulateMovies(categoryId);
+  const genres = await getGenres();
+  const initialActiveMenu = categoryId ? "" : "filmes";
 
   return (
     <div>
-      <PageClient initialMovies={initialMovies} />
+      <PageClient
+        initialMovies={initialMovies}
+        genres={genres}
+        initialActiveMenu={initialActiveMenu}
+      />
     </div>
   );
 }
