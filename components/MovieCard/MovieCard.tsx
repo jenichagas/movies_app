@@ -38,9 +38,9 @@ export default function MovieCard({ movie }: MovieCardProps) {
           <div className={styles.infoContainer}>
             <div className={styles.infoContent}>
               <p className={styles.title}>{movie.title}</p>
-              {/* {movie.vote_average > 0 && (
+              {movie.vote_average > 0 && (
                 <StarRating rating={movie.vote_average} />
-              )} */}
+              )}
             </div>
           </div>
 
