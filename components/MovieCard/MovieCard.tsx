@@ -1,10 +1,8 @@
-"use client";
-
+import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import styles from "./MovieCard.module.scss";
 import { MovieProps } from "@/app/types";
-import { useState } from "react";
-import Link from "next/link";
 
 const StarRating = dynamic(() => import("../StarRating"), {
   ssr: false,
@@ -28,19 +26,21 @@ export default function MovieCard({ movie }: MovieCardProps) {
           </div>
         )}
         <div className={styles.poster}>
-          <img
+          <Image
             src={`${imageBaseUrl}${movie.poster_path}`}
             alt="Imagem do filme"
             className={styles.posterImage}
+            width={200}
+            height={300}
           />
         </div>
         <div className={styles.movieInfo}>
           <div className={styles.infoContainer}>
             <div className={styles.infoContent}>
               <p className={styles.title}>{movie.title}</p>
-              {movie.vote_average > 0 && (
+              {/* {movie.vote_average > 0 && (
                 <StarRating rating={movie.vote_average} />
-              )}
+              )} */}
             </div>
           </div>
 
