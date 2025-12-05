@@ -1,0 +1,38 @@
+@keyframes opacity {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes colorize {
+  0% {
+    background: var(--color-background);
+  }
+  50% {
+    background: var(--color-background-hover);
+  }
+  100% {
+    background: var(--color-background);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    outline: 0em solid transparent;
+    outline-offset: -0.1em;
+  }
+  50% {
+    outline: 0.2em solid var(--color-outline);
+    outline-offset: 0.2em;
+  }
+  100% {
+    outline: 0.4em solid transparent;
+    outline-offset: 0.4em;
+  }
+}
