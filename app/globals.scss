@@ -5,3 +5,8 @@
 
 // STYLE COMPONENTS
 @use "../styles/buttons.scss";
+@use "../styles/overlay.scss";
+
+// SLICK CAROUSEL
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
