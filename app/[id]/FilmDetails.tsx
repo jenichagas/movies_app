@@ -11,6 +11,8 @@ import Image from "next/image";
 import { formatRuntime } from "@/utils/formatRuntime";
 import { getRating } from "@/utils/getRating";
 import FavButton from "@/components/FavButton";
+import ButtonPlay from "@/components/ButtonPlay/ButtonPlay";
+
 
 interface FilmDetailsProps {
   movie: MovieProps;
@@ -35,10 +37,13 @@ export default function FilmDetails({ movie }: FilmDetailsProps) {
             {" "}
             <PiFilmSlateFill /> Ver trailer
           </button>
-          <button className={styles.watchButton}>
+          <div>
+            <ButtonPlay />
+          </div>
+          {/* <button className={styles.watchButton}>
             {" "}
             <IoPlayCircleSharp /> Assistir
-          </button>
+          </button> */}
         </div>
       </div>
       <div className={styles.details}>
