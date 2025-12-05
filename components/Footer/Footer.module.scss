@@ -1,10 +1,8 @@
-@import "@/styles/variables";
-
 .footer {
-  background-color: var(--secondary-color);
+  background-color: var(--background-color);
   color: var(--white-color);
-  padding: 4rem 2rem 2rem;
-  border-top: 1px solid var(--gray-border-color);
+  padding: 4rem 2rem 1rem;
+  border-top: 1px solid var(--border-gray-color);
 }
 
 .footerContent {
@@ -15,28 +13,13 @@
   max-width: 1200px;
   margin: 0 auto;
   padding-bottom: 2rem;
-  border-bottom: 1px solid var(--gray-border-color);
+  border-bottom: 1px solid var(--border-gray-color);
 }
 
 .logoSocial {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-}
-
-.socialIcons {
-  display: flex;
-  gap: 1rem;
-
-  a {
-    color: var(--white-color);
-    font-size: 1.5rem;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: var(--soft-red-color);
-    }
-  }
 }
 
 .links {
@@ -47,7 +30,6 @@
 
 .linkColumn {
   h4 {
-    font-size: 1.2rem;
     margin-bottom: 1rem;
     color: var(--white-color);
   }
@@ -65,16 +47,17 @@
     color: #ccc;
     text-decoration: none;
     transition: color 0.3s ease;
+    font-size: 0.9rem;
 
     &:hover {
-      color: var(--white-color);
+      color: var(--secondary-color);
     }
   }
 }
 
 .copyright {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
   color: #ccc;
   font-size: 0.9rem;
 }

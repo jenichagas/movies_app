@@ -1,11 +1,6 @@
 import Link from "next/link";
 import styles from "./Footer.module.scss";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaYoutube,
-} from "react-icons/fa";
+import SocialTooltip from "../SocialTooltip";
 import Logo from "../Logo";
 
 export default function Footer() {
@@ -15,18 +10,7 @@ export default function Footer() {
         <div className={styles.logoSocial}>
           <Logo />
           <div className={styles.socialIcons}>
-            <Link href="#" aria-label="Facebook">
-              <FaFacebookF />
-            </Link>
-            <Link href="#" aria-label="Twitter">
-              <FaTwitter />
-            </Link>
-            <Link href="#" aria-label="Instagram">
-              <FaInstagram />
-            </Link>
-            <Link href="#" aria-label="Youtube">
-              <FaYoutube />
-            </Link>
+            <SocialTooltip />
           </div>
         </div>
         <div className={styles.links}>
