@@ -1,68 +1,128 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./CategorieList.module.scss";
 import Image from "next/image";
-import Dropdown from "../Dropdown";
+import Dropdown from "../Dropdown/Dropdown";
+import { Genre } from "@/app/types";
 
-const FEATURED_CATEGORIES = [
-  {
-    name: "Ação",
-    image: "/acao-category.png", 
-    color: "#FF5252",
-  },
-  {
-    name: "Romance",
-    image: "/romance-category.png",
-    color: "#E040FB",
-  },
-  {
-    name: "Terror",
-    image: "/terror-category.png", 
-    color: "#424242",
-  },
-  {
-    name: "Ficção",
-    image: "/ficcao-category.png", 
-    color: "#448AFF",
-  },
-  {
-    name: "Infantil",
-    image: "/infantil-category.png",
-    color: "#FFC107",
-  },
-];
+const FEATURED_CATEGORIES_META = {
+  28: { image: "/acao-category.png", color: "#b71616f3" },
+  10749: { image: "/romance-category.png", color: "#960aafff" },
+  27: { image: "/terror-category.png", color: "#424242" },
+  878: { image: "/ficcao-category.png", color: "#033fa8ff" },
+  99: { image: "/film-category.png", color: "#189e04ff" },
+  10751: { image: "/infantil-category.png", color: "#FFC107" },
+};
 
-const EXTRA_CATEGORIES = [
-  "Comédia",
-  "Drama",
-  "Horror",
-  "Suspense",
-  "Animação",
-  "Documentário",
-];
+interface CategorieListProps {
+  genres: Genre[];
+}
 
-export default function CategorieList() {
+
+interface DropdownListProps {
+  genres: Genre[];
+  activeCategoryId: string | null;
+  handleCategoryClick: (categoryId: number) => void;
+  closeDropdown?: () => void;
+}
+
+const DropdownList = ({
+  genres,
+  activeCategoryId,
+  handleCategoryClick,
+  closeDropdown,
+}: DropdownListProps) => (
+  <ul className={styles.dropdownMenu}>
+    {genres.map((category) => (
+      <li
+        key={category.id}
+        onClick={() => {
+          handleCategoryClick(category.id);
+          if (closeDropdown) {
+            closeDropdown();
+          }
+        }}
+        className={
+          activeCategoryId === category.id.toString()
+            ? styles.activeDropdown
+            : ""
+        }
+      >
+        {category.name}
+      </li>
+    ))}
+  </ul>
+);
+
+export default function CategorieList({ genres }: CategorieListProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const activeCategoryId = searchParams.get("category");
+
+  const handleCategoryClick = (categoryId: number) => {
+    const params = new URLSearchParams(searchParams);
+    if (activeCategoryId === categoryId.toString()) {
+      params.delete("category");
+    } else {
+      params.set("category", categoryId.toString());
+    }
+    router.push(`?${params.toString()}`);
+  };
+
+  const featuredIds = new Set(
+    Object.keys(FEATURED_CATEGORIES_META).map(Number)
+  );
+
+  const featuredGenres = genres
+    .filter((genre) => featuredIds.has(genre.id))
+    .map((genre) => ({
+      ...genre,
+      ...FEATURED_CATEGORIES_META[
+        genre.id as keyof typeof FEATURED_CATEGORIES_META
+      ],
+    }));
+
+  const extraGenres = genres.filter((genre) => !featuredIds.has(genre.id));
+
   return (
     <section className={styles.categorieSection}>
       <ul className={styles.listContainer}>
-        {FEATURED_CATEGORIES.map((category) => (
-          <li key={category.name} className={styles.categoryItem}>
-            <div
-              className={styles.circle}
-              style={{ backgroundColor: category.color }}
-            />
-            <div className={styles.imageContainer}>
-              <Image
-                src={category.image}
-                alt={category.name}
-                width={120}
-                height={120}
-                className={styles.categoryImage}
+        {featuredGenres.map((category) => {
+          const isActive = activeCategoryId === category.id.toString();
+
+          return (
+            <li
+              key={category.id}
+              className={styles.categoryItem}
+              onClick={() => handleCategoryClick(category.id)}
+            >
+              <div
+                className={`${styles.circle} ${isActive ? styles.active : ""}`}
+                style={{ backgroundColor: category.color }}
               />
-            </div>
-            <span className={styles.categoryName}>{category.name}</span>
-          </li>
-        ))}
+              <div className={styles.imageContainer}>
+                <Image
+                  src={category.image}
+                  alt={category.name}
+                  width={120}
+                  height={120}
+                  className={styles.categoryImage}
+                />
+              </div>
+              <div className={styles.nameContainer}>
+                <span
+                  className={`${styles.categoryName} ${
+                    isActive ? styles.activeName : ""
+                  }`}
+                >
+                  {category.name}
+                </span>
+                {isActive && <div className={styles.indicator} />}
+              </div>
+            </li>
+          );
+        })}
         <li className={styles.moreItem}>
           <Dropdown
             trigger={(isOpen) => (
@@ -78,11 +138,11 @@ export default function CategorieList() {
               </div>
             )}
           >
-            <ul className={styles.dropdownMenu}>
-              {EXTRA_CATEGORIES.map((category) => (
-                <li key={category}>{category}</li>
-              ))}
-            </ul>
+            <DropdownList
+              genres={extraGenres}
+              activeCategoryId={activeCategoryId}
+              handleCategoryClick={handleCategoryClick}
+            />
           </Dropdown>
         </li>
       </ul>

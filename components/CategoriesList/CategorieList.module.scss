@@ -31,25 +31,55 @@
   height: 115px;
   border-radius: 50%;
   margin-bottom: 0.5rem;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 20px,
+    hsla(0, 0%, 100%, 0.076) 0,
+    hsla(0, 0%, 100%, 0.122) 40px
+  );
 }
 
 .imageContainer {
   position: absolute;
   bottom: 36px;
-  width: 120px;
   height: 120px;
 
   .categoryImage {
     object-fit: contain;
     border-radius: 0 0 60px 60px;
-    height: 130px;
+    height: 127px;
+    width: auto;
   }
 }
 
 .categoryName {
-  font-weight: 600;
+  font-weight: 530;
   color: var(--white-color);
   text-align: center;
+  transition: all 0.5s ease-in-out;
+}
+
+.nameContainer {
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.activeName {
+  color: var(--secondary-color);
+}
+
+.indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--secondary-color), transparent);
+  box-shadow: 0 0 8px var(--secondary-color);
+  transition: all 0.5s ease-in-out;
 }
 
 .moreItem {
@@ -63,8 +93,8 @@
   align-items: center;
   gap: 0.5rem;
   color: var(--white-color);
-  font-weight: 600;
   transition: background-color 0.3s;
+  padding-bottom: 5px;
 
   &:hover {
     background-color: var(--secondary-color);
@@ -93,6 +123,9 @@
   flex-direction: column;
   gap: 0.5rem;
   border: 1px solid #3a3a3a;
+  max-height: 250px;
+  overflow: auto;
+  transition: all 0.5s ease-in-out;
 
   li {
     padding: 0.5rem 1rem;
@@ -103,7 +136,20 @@
     cursor: pointer;
 
     &:hover {
-      background-color: var(--primary-color);
+      background-color: var(--secondary-color);
+      transition: 0.5s all ease-in-out;
     }
   }
+}
+
+.active {
+  border: 3rem solid var(--secondary-color);
+  transition: all 0.5s ease-in-out;
+  box-shadow: 0 0 10px var(--secondary-color);
+}
+
+.activeDropdown {
+  background-color: var(--secondary-color);
+  transition: all 0.5s ease-in-out;
+  box-shadow: 0 0 10px var(--secondary-color);
 }

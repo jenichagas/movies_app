@@ -2,12 +2,15 @@ import styles from "./CategoriesListSkeleton.module.scss";
 
 export default function CategoriesListSkeleton() {
   return (
-    <section className={styles.skeletonSection}>
-      <ul>
+    <div className={styles.categorieSection}>
+      <div className={styles.listContainer}>
         {Array.from({ length: 6 }).map((_, index) => (
-          <li key={index} />
+          <div key={index} className={styles.categoryItemSkeleton}>
+            <div className={styles.circleSkeleton} />
+            <div className={styles.nameSkeleton} />
+          </div>
         ))}
-      </ul>
-    </section>
+      </div>
+    </div>
   );
 }
