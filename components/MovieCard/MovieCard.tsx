@@ -33,9 +33,13 @@ export default function MovieCard({
           </div>
         )}
         <div className={styles.favButton}>
-          <FavButton movieId={movie.id} movieTitle={movie.title} />
+          <FavButton
+            movieId={movie.id}
+            movieTitle={movie.title}
+            showText={false}
+          />
         </div>
-        <div className={styles.poster} >
+        <div className={styles.poster}>
           <Image
             src={`${imageBaseUrl}${movie.poster_path}`}
             alt="Imagem do filme"
