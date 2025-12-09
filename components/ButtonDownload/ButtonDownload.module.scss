@@ -6,15 +6,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .label {
   background-color: transparent;
-  border: 2px solid rgb(91, 91, 240);
+  border: 2px solid var(--secondary-color);
   display: flex;
   align-items: center;
-  border-radius: 50px;
-  width: 160px;
+  border-radius: 18rem;
+  width: 190px;
   cursor: pointer;
   transition: all 0.4s ease;
   padding: 5px;
@@ -28,7 +29,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #fff;
+  background-color: var(--white-color);
   width: 8px;
   height: 8px;
   transition: all 0.4s ease;
@@ -44,11 +45,10 @@
 
 .label .title {
   font-size: 17px;
-  color: #fff;
+  color: var(--white-color);
   transition: all 0.4s ease;
   position: absolute;
   right: 18px;
-  bottom: 14px;
   text-align: center;
 }
 
@@ -61,7 +61,7 @@
   height: 45px;
   width: 45px;
   border-radius: 50%;
-  background-color: rgb(91, 91, 240);
+  background-color: var(--secondary-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,7 +72,7 @@
 }
 
 .label .circle .icon {
-  color: #fff;
+  color: var(--white-color);
   width: 30px;
   position: absolute;
   top: 50%;
@@ -85,7 +85,7 @@
   aspect-ratio: 1;
   width: 15px;
   border-radius: 2px;
-  background-color: #fff;
+  background-color: var(--white-color);
   opacity: 0;
   visibility: hidden;
   position: absolute;
@@ -100,7 +100,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  background-color: #3333a8;
+  background: var(--purple-color);
   width: 100%;
   height: 0;
   transition: all 0.4s ease;
