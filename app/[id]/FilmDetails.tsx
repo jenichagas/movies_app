@@ -6,13 +6,12 @@ import { FaRegStar } from "react-icons/fa";
 import { MdOutlineTimer } from "react-icons/md";
 import { IoCalendarOutline } from "react-icons/io5";
 import { PiFilmSlateFill } from "react-icons/pi";
-import { IoPlayCircleSharp } from "react-icons/io5";
+import ButtonDownload from "@/components/ButtonDownload/ButtonDownload";
 import Image from "next/image";
 import { formatRuntime } from "@/utils/formatRuntime";
 import { getRating } from "@/utils/getRating";
 import FavButton from "@/components/FavButton";
 import ButtonPlay from "@/components/ButtonPlay/ButtonPlay";
-
 
 interface FilmDetailsProps {
   movie: MovieProps;
@@ -32,18 +31,8 @@ export default function FilmDetails({ movie }: FilmDetailsProps) {
           width={500}
           height={750}
         />
-        <div className={styles.actions}>
-          <button className={styles.trailerButton}>
-            {" "}
-            <PiFilmSlateFill /> Ver trailer
-          </button>
-          <div>
-            <ButtonPlay />
-          </div>
-          {/* <button className={styles.watchButton}>
-            {" "}
-            <IoPlayCircleSharp /> Assistir
-          </button> */}
+        <div className={styles.download}>
+          <ButtonDownload />
         </div>
       </div>
       <div className={styles.details}>
@@ -109,8 +98,16 @@ export default function FilmDetails({ movie }: FilmDetailsProps) {
             ))}
           </div>
         )}
+        <div className={styles.actions}>
+          <button className={styles.trailerButton}>
+            {" "}
+            <PiFilmSlateFill /> Ver trailer
+          </button>
+          <div>
+            <ButtonPlay />
+          </div>
+        </div>
       </div>
-      <div>{}</div>
     </div>
   );
 }
