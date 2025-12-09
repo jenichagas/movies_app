@@ -11,6 +11,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  rewrites: async () => {
+    return [
+      {
+        source: "/minha-lista",
+        destination: "/myList",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
