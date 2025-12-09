@@ -1,7 +1,4 @@
-import type {
-  ApiMovieResponse,
-  MovieProps,
-} from "@/app/types";
+import type { ApiMovieResponse, MovieProps } from "@/app/types";
 import PageClient from "./PageClient";
 
 export async function getPopulateMovies(
@@ -14,6 +11,7 @@ export async function getPopulateMovies(
   const params = new URLSearchParams({
     api_key: process.env.NEXT_PUBLIC_API_KEY,
     language: "pt-BR",
+    limit: "28",
   });
 
   if (genreId) {
@@ -27,6 +25,7 @@ export async function getPopulateMovies(
     throw new Error("Erro ao buscar filmes");
   }
   const data = (await response.json()) as ApiMovieResponse;
+  console.log(data);
   return data.results;
 }
 
