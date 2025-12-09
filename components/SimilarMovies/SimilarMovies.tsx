@@ -81,13 +81,17 @@ export default function SimilarMovies({ movieId }: SimilarMoviesProps) {
   return (
     <div className={styles.similarMoviesContainer}>
       <h2>VOCÊ TAMBÉM PODE GOSTAR</h2>
-        <Slider {...settings}>
-          {similarMovies.slice(0, 10).map((movie) => (
-            <div key={movie.id} className={styles.slide}>
-              <MovieCard movie={movie} />
-            </div>
-          ))}
-        </Slider>
-      </div>
+      <Slider {...settings}>
+        {similarMovies.slice(0, 10).map((movie) => (
+          <div key={movie.id} className={styles.slide}>
+            <MovieCard
+              movie={movie}
+              titleFontSize="0.875rem"
+              overviewFontSize="0.7rem"
+            />
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 }
