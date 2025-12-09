@@ -5,7 +5,6 @@ import styles from "./CategorieList.module.scss";
 import Image from "next/image";
 import Dropdown from "../Dropdown/Dropdown";
 import { Genre } from "@/app/types";
-import { PiListHeart } from "react-icons/pi";
 import { FaListUl } from "react-icons/fa";
 import { LiaGripLinesSolid } from "react-icons/lia";
 
