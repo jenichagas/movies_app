@@ -26,18 +26,17 @@ const SettingsMenu = ({ closeDropdown }: SettingsMenuProps) => {
 
   return (
     <div className={style.settingsMenu}>
-      <Link href="#" onClick={handleClick}>
-        <p><CgProfile /> Perfil</p>
-      </Link>
-      <Link href="#" onClick={handleClick}>
+      <Link href="#">
         <p>
-          {" "}
-          <PiListHeart /> Minha Lista
-        </p>{" "}
+          <CgProfile /> Perfil
+        </p>
       </Link>
+
       <hr />
       <Link href="#" onClick={handleClick}>
-        <p><RiLogoutCircleLine /> Sair</p>
+        <p>
+          <RiLogoutCircleLine /> Sair
+        </p>
       </Link>
     </div>
   );
@@ -82,10 +81,12 @@ export default function NavBar() {
           />
         </div>
         <div>
-          <button className={style.favMovies}>
-            <PiListHeart />
-            Minha lista
-          </button>
+          <Link href="/minha-lista">
+            <button className={style.favMovies}>
+              <PiListHeart />
+              Minha lista
+            </button>
+          </Link>
         </div>
         <div>
           <Dropdown

@@ -7,6 +7,9 @@
   background: var(--primary-color);
   padding: 0.7rem 3rem;
   border-bottom: solid 1px #1f0b30;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
 
   .actions {
     display: flex;
