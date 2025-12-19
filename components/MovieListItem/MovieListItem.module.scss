@@ -1,0 +1,126 @@
+.movieListItem {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: #12081c;
+  border-radius: 8px;
+  border: 1px solid var(--border-purple-color);
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s;
+  border-left: 2.5px solid var(--secondary-color);
+
+  &:hover {
+    background-color: #180b25;
+  }
+
+  .imageContainer {
+    position: relative;
+    width: 150px;
+    min-width: 150px;
+    height: 225px;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+
+    .image {
+      object-fit: cover;
+    }
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--white-color);
+      transition: color 0.3s;
+
+      &:hover {
+        color: var(--secondary-color);
+      }
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--font-gray-color);
+      flex-shrink: 0;
+      padding-top: 4px;
+
+      .voteAverage {
+        font-weight: bold;
+        color: var(--white-color);
+      }
+    }
+
+    .overview {
+      line-height: 1.6;
+      color: var(--font-gray-color);
+      flex-grow: 1;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .info {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.9rem;
+    color: var(--gray-color);
+    align-items: center;
+    margin-bottom: 1rem;
+
+
+    span {
+      display: flex;
+      gap: 0.5rem;
+
+      svg {
+        color: var(--secondary-color);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .movieListItem {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .details {
+    width: 100%;
+  }
+
+  .details .header {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .rating {
+    margin-bottom: 1rem;
+  }
+}

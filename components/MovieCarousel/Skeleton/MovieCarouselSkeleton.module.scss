@@ -1,0 +1,13 @@
+.skeletonContainer {
+  display: flex;
+  padding: 1rem 0.5rem;
+  gap: 1rem;
+}
+
+.carouselRoot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 2.5rem;
+  overflow: hidden; 
+}
