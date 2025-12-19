@@ -1,13 +1,13 @@
 "use client";
 import Lottie from "lottie-react";
-import notFoundAnimation from "@/public/cat-playing-animation.json";
+import catLamp from "@/public/cat-lamp.json";
 import styles from "./NotFound.module.scss";
 
 export default function NotFound() {
   return (
     <div className={styles.notFoundContainer}>
-      <Lottie animationData={notFoundAnimation} loop={true} />
-      <p>Ops! Nenhum resultado encontrado.</p>
+      <Lottie animationData={catLamp} loop={true} />
+      <p>Ops! Algo deu errado.</p>
     </div>
   );
 }
