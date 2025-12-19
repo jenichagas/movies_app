@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import { MovieProps } from "@/app/types";
 import MovieCard from "../MovieCard";
 import styles from "./SimilarMovies.module.scss";
-import MovieGridSkeleton from "../MovieGrid/Skeleton";
+import MovieCarousel from "../MovieCarousel/Skeleton/MovieCarouselSkeleton";
 
 interface SimilarMoviesProps {
   movieId: string;
@@ -13,11 +13,6 @@ interface SimilarMoviesProps {
 export default function SimilarMovies({ movieId }: SimilarMoviesProps) {
   const [similarMovies, setSimilarMovies] = useState<MovieProps[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   useEffect(() => {
     async function fetchSimilarMovies() {
@@ -30,7 +25,6 @@ export default function SimilarMovies({ movieId }: SimilarMoviesProps) {
         const data = await response.json();
         setSimilarMovies(data.results);
 
-        console.log("Similar Movies Data:", data.results.length);
       } catch (error) {
         console.error(error);
       } finally {
@@ -64,7 +58,7 @@ export default function SimilarMovies({ movieId }: SimilarMoviesProps) {
   if (loading) {
     return (
       <div>
-        <MovieGridSkeleton />
+        <MovieCarousel />
       </div>
     );
   }
