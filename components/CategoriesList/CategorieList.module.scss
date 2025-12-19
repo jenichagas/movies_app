@@ -85,7 +85,6 @@
 .moreItem {
   display: flex;
   align-items: flex-end;
-  // padding-bottom: 1.5rem;
 }
 
 .moreButton {
@@ -112,7 +111,7 @@
 .arrowIcon {
   display: inline-block;
   transform: rotate(-90deg);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 
 .arrowOpen {
@@ -141,7 +140,7 @@
     color: var(--white-color);
     text-decoration: none;
     border-radius: 4px;
-    transition: background-color 0.2s;
+    transition: background-color 0.5s;
     cursor: pointer;
 
     &:hover {
