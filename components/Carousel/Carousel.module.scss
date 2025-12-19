@@ -1,0 +1,67 @@
+.carouselContainer {
+  margin: 0 2rem;
+}
+
+:global(.slick-slider) {
+  position: relative;
+}
+
+:global(.slick-list) {
+  overflow: hidden;
+}
+
+:global(.slick-track) {
+  display: flex;
+}
+
+:global(.slick-slide > div) {
+  padding: 0 0.5rem;
+}
+
+:global(.slick-prev),
+:global(.slick-next) {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  cursor: pointer;
+  background: rgba(20, 20, 20, 0.7);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+:global(.slick-prev:hover),
+:global(.slick-next:hover) {
+  background: rgba(20, 20, 20, 0.9);
+}
+
+:global(.slick-prev::before),
+:global(.slick-next::before) {
+  font-family: "slick";
+  font-size: 20px;
+  color: white;
+  line-height: 1;
+  opacity: 0.75;
+}
+
+:global(.slick-prev) {
+  left: -45px;
+}
+
+:global(.slick-next) {
+  right: -45px;
+}
+
+:global(.slick-disabled) {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.slide {
+  box-sizing: border-box;
+}
