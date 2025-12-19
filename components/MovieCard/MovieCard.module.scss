@@ -40,10 +40,16 @@
   }
 
   .favButton {
-    z-index: 1000;
+    z-index: 999;
     position: absolute;
-    top: 10;
-    left: 6;
+    top: 10px;
+    left: 6px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &.isFavorite {
+      opacity: 1;
+    }
   }
 
   .movieInfo {
@@ -92,6 +98,10 @@
   &:hover {
     cursor: pointer;
     transform: scale(1.03);
+
+    .favButton {
+      opacity: 1;
+    }
 
     .overviewHidden {
       opacity: 1;
