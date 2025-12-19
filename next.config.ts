@@ -18,6 +18,14 @@ const nextConfig: NextConfig = {
         source: "/minha-lista",
         destination: "/myList",
       },
+      {
+        source: "/login",
+        destination: "/login",
+      },
+      {
+        source: "/nova-conta",
+        destination: "/register",
+      },
     ];
   },
 };
