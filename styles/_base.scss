@@ -63,6 +63,13 @@ small {
   font-size: clamp(0.75rem, 1.5vw, 0.85rem);
 }
 
+a {
+  text-decoration: none;
+}
+.layout {
+  margin-top: 4.5rem;
+}
+
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 6px;
