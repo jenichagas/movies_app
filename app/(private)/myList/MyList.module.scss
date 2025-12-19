@@ -1,0 +1,159 @@
+.myListPage {
+  padding: 2rem 4rem;
+  min-height: 100vh;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-purple-color);
+    padding-bottom: 2rem;
+
+    .titleWrapper {
+      h1 {
+        font-size: 2.3rem;
+        color: var(--white-color);
+      }
+      p {
+        color: var(--soft-gray-color);
+        margin-top: 0.5rem;
+      }
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .categoryFilters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+
+      .filterButton {
+        background: #1c0d2b;
+        border: 1px solid #3a2a4a;
+        color: var(--white-color);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: capitalize;
+
+        &:hover {
+          background: #2a1a3a;
+          border-color: var(--secondary-color);
+        }
+
+        &.activeFilter {
+          background: var(--secondary-color);
+          color: var(--white-color);
+          font-weight: bold;
+          border-color: var(--secondary-color);
+        }
+      }
+    }
+
+    .toggleGroup {
+      display: flex;
+      border: 1px solid #3a2a4a;
+      border-radius: 8px;
+      overflow: hidden;
+
+      .toggleItem {
+        background-color: transparent;
+        color: #a0a0a0;
+        padding: 0.6rem 1rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+
+        &:hover {
+          background-color: #1c0d2b;
+        }
+
+        &[data-state="on"] {
+          background-color: var(--secondary-color);
+          color: white;
+        }
+      }
+    }
+  }
+
+  .content {
+    .emptyState {
+      text-align: center;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .emptyStateAnimation {
+        width: 250px;
+        margin-bottom: 1rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+        margin-top: 1rem;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 1.1rem;
+        color: #a0a0a0;
+        max-width: 500px;
+        margin: 0.5rem auto 1.5rem;
+        line-height: 1.6;
+      }
+
+      .exploreButton {
+        display: inline-block;
+        background-color: var(--secondary-color);
+        color: var(--white-color);
+        padding: 0.8rem 2rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.3s;
+
+        &:hover {
+          background-color: var(--secondary-color-hover);
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    .categorySection {
+      margin-bottom: 1rem;
+      .categoryTitle {
+        font-size: 1.8rem;
+        text-transform: capitalize;
+        border-left: 4px solid var(--secondary-color);
+        padding-left: 1rem;
+        font-weight: 600;
+      }
+    }
+
+    .listContainer {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .myListPage {
+    padding: 1rem 1.5rem;
+  }
+  .header .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
