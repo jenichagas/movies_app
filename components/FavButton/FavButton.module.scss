@@ -9,19 +9,24 @@
   border-radius: 18px;
   box-shadow: rgba(46, 46, 46, 0.2) 0px 8px 24px;
   color: var(--white-color);
-  margin-right: 4.9rem;
 }
 
+
 .noText {
-  padding: 10px;
+  padding: 9px;
   border-radius: 50%;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .favorite {
   display: none;
 }
 
-.favorite:checked + .container svg {
+.container[data-favorite="true"] svg {
   fill: hsl(0, 0%, 100%);
   stroke: hsl(0, 0%, 100%);
   animation: heartButton 1s;
@@ -63,22 +68,24 @@
   transition: all 0.5s;
 }
 
-.option1 {
+/* Estado NÃO CHECADO */
+.container:not([data-favorite="true"]) .action .option1 {
   transform: translate(0px, 0%);
   opacity: 1;
 }
 
-.favorite:checked + .container .action .option1 {
-  transform: translate(0px, -100%);
-  opacity: 0;
-}
-
-.option2 {
+.container:not([data-favorite="true"]) .action .option2 {
   transform: translate(0px, 100%);
   opacity: 0;
 }
 
-.favorite:checked + .container .action .option2 {
+/* Estado CHECADO */
+.container[data-favorite="true"] .action .option1 {
+  transform: translate(0px, -100%);
+  opacity: 0;
+}
+
+.container[data-favorite="true"] .action .option2 {
   transform: translate(0px, 0%);
   opacity: 1;
 }
