@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import styles from "./MovieCard.module.scss";
 import { MovieProps } from "@/app/types";
 import FavButton from "../FavButton";
+import { useFavorites } from "@/contexts/FavoriteContext";
+import clsx from "clsx";
 
 const StarRating = dynamic(() => import("../StarRating"), {
   ssr: false,
@@ -24,6 +28,23 @@ export default function MovieCard({
   const imageBaseUrl = "https://image.tmdb.org/t/p/original";
   const hasOverview = movie.overview && movie.overview.length > 0;
 
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+  const isFav = isFavorite(movie.id);
+
+  const handleFavClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isFav) {
+      removeFavorite(movie.id);
+    } else {
+      addFavorite(movie);
+    }
+  };
+
+  const favButtonClasses = clsx(styles.favButton, {
+    [styles.isFavorite]: isFav,
+  });
+
   return (
     <Link href={`/${movie.id}`}>
       <div className={styles.movieCard}>
@@ -32,13 +53,12 @@ export default function MovieCard({
             <small>Adicionado recente</small>
           </div>
         )}
-        <div className={styles.favButton}>
-          <FavButton
-            movieId={movie.id}
-            movieTitle={movie.title}
-            showText={false}
-          />
-        </div>
+        <FavButton
+          className={favButtonClasses}
+          onClick={handleFavClick}
+          isFavorite={isFav}
+          showText={false}
+        />
         <div className={styles.poster}>
           <Image
             src={`${imageBaseUrl}${movie.poster_path}`}
