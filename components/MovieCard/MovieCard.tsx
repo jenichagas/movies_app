@@ -1,18 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import dynamic from "next/dynamic";
+import Link from "next/link";
 import styles from "./MovieCard.module.scss";
 import { MovieProps } from "@/app/types";
 import FavButton from "../FavButton";
-import { useFavorites } from "@/contexts/FavoriteContext";
-import clsx from "clsx";
-
-const StarRating = dynamic(() => import("../StarRating"), {
-  ssr: false,
-  loading: () => <div style={{ height: "24px" }} />,
-});
+import { getRating } from "@/utils/getRating";
+import StarRating from "@/components/StarRating";
 
 interface MovieCardProps {
   movie: MovieProps;
@@ -25,49 +19,35 @@ export default function MovieCard({
   titleFontSize,
   overviewFontSize,
 }: MovieCardProps) {
-  const imageBaseUrl = "https://image.tmdb.org/t/p/original";
+  const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
+  const rating = getRating(movie.genres);
   const hasOverview = movie.overview && movie.overview.length > 0;
 
-  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
-  const isFav = isFavorite(movie.id);
-
-  const handleFavClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (isFav) {
-      removeFavorite(movie.id);
-    } else {
-      addFavorite(movie);
-    }
-  };
-
-  const favButtonClasses = clsx(styles.favButton, {
-    [styles.isFavorite]: isFav,
-  });
+  const isFav = movie.is_favorite || false;
 
   return (
-    <Link href={`/${movie.id}`}>
-      <div className={styles.movieCard}>
-        {movie.vote_average === 0 && (
-          <div className={styles.badge}>
-            <small>Adicionado recente</small>
-          </div>
-        )}
-        <FavButton
-          className={favButtonClasses}
-          onClick={handleFavClick}
-          isFavorite={isFav}
-          showText={false}
-        />
-        <div className={styles.poster}>
-          <Image
-            src={`${imageBaseUrl}${movie.poster_path}`}
-            alt="Imagem do filme"
-            className={styles.posterImage}
-            width={200}
-            height={300}
-          />
+    <div className={styles.movieCard}>
+      {" "}
+      {movie.vote_average === 0 && (
+        <div className={styles.badge}>
+          <small>Adicionado recente</small>
         </div>
+      )}
+      <FavButton
+        mediaId={movie.id}
+        mediaType="movie" 
+        isFavorite={isFav}
+        showText={false}
+        className={styles.favButton}
+      />
+      <div className={styles.poster}>
+        <Image
+          src={`${imageBaseUrl}${movie.poster_path}`}
+          alt="{movie.title}"
+          className={styles.posterImage}
+          width={200}
+          height={300}
+        />
         <div className={styles.movieInfo}>
           <div className={styles.infoContainer}>
             <div className={styles.infoContent}>
@@ -91,10 +71,12 @@ export default function MovieCard({
                   : movie.overview
                 : "Sinopse não disponível."}
             </p>
-            <button className="primary-btn">Ver mais</button>
+            <Link href={`/${movie.id}`}>
+              <button className="primary-btn">Ver mais</button>
+            </Link>
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
