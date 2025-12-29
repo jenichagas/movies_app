@@ -1,5 +1,6 @@
 import React from "react";
 import "@/app/globals.scss";
+import { ToastProvider } from "@/providers/toast-provider";
 
 export default function AuthLayout({
   children,
@@ -9,6 +10,7 @@ export default function AuthLayout({
   return (
     <html lang="pt-BR">
       <body>
+        <ToastProvider />
         <main>{children}</main>
       </body>
     </html>

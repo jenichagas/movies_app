@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { FavoritesProvider } from "@/contexts/FavoriteContext";
-import { ToastProvider } from "@/contexts/ToastContext";
+import { ToastProvider } from "@/providers/toast-provider";
 import "@/app/globals.scss";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer/Footer";
@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <ToastProvider>
+        <ToastProvider />
           <FavoritesProvider>
             <main>
               <NavBar />
@@ -28,7 +28,6 @@ export default function RootLayout({
             <div id="portal-root"></div>
             <Footer />
           </FavoritesProvider>
-        </ToastProvider>
       </body>
     </html>
   );
