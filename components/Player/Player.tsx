@@ -9,26 +9,27 @@ import { FaSun, FaLock, FaLockOpen } from "react-icons/fa";
 interface PlayerProps {
   onClose: () => void;
   title: string;
+  videoUrl: string;
 }
 
-export default function Player({ onClose, title }: PlayerProps) {
+export default function Player({ onClose, title, videoUrl }: PlayerProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isTitleVisible, setIsTitleVisible] = useState(true);
+  const [isControlsVisible, setIsControlsVisible] = useState(true);
   const [brightness, setBrightness] = useState(1);
+
   const [isLocked, setIsLocked] = useState(false);
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const titleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const showTitleAndAutoHide = useCallback(() => {
+  const showControlsAndAutoHide = useCallback(() => {
     if (isLocked) return;
-    if (titleTimeoutRef.current) {
-      clearTimeout(titleTimeoutRef.current);
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current);
     }
-    setIsTitleVisible(true);
-    titleTimeoutRef.current = setTimeout(() => {
-      setIsTitleVisible(false);
+    setIsControlsVisible(true);
+    controlsTimeoutRef.current = setTimeout(() => {
+      setIsControlsVisible(false);
     }, 5000);
   }, [isLocked]);
 
@@ -49,29 +50,24 @@ export default function Player({ onClose, title }: PlayerProps) {
     },
     [handleClose, isLocked]
   );
-
   const handleBrightnessChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBrightness(Number(e.target.value));
   };
-
   const toggleLock = () => {
     setIsLocked((prev) => !prev);
-    // Ao desbloquear, mostramos os controles novamente
     if (isLocked) {
-      showTitleAndAutoHide();
+      showControlsAndAutoHide();
     }
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
     setIsVisible(true);
   }, []);
 
   useEffect(() => {
     if (isVisible) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      showTitleAndAutoHide();
+      showControlsAndAutoHide();
       document.body.style.overflow = "hidden";
       window.addEventListener("keydown", handleKeyDown);
     }
@@ -79,19 +75,43 @@ export default function Player({ onClose, title }: PlayerProps) {
     return () => {
       document.body.style.overflow = "auto";
       window.removeEventListener("keydown", handleKeyDown);
-      if (titleTimeoutRef.current) {
-        clearTimeout(titleTimeoutRef.current);
+      if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current);
       }
     };
-  }, [isVisible, handleKeyDown, showTitleAndAutoHide]);
+  }, [isVisible, handleKeyDown, showControlsAndAutoHide]);
 
   if (!isMounted) {
     return null;
   }
 
+  const isYoutubeVideo = videoUrl.includes("youtube.com");
+
+  const playerContent = isYoutubeVideo ? (
+    <iframe
+      src={videoUrl}
+      title="YouTube video player"
+      frameBorder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+      className={styles.iframe}
+      onEnded={() => setIsVisible(true)}
+      style={{ filter: `brightness(${brightness})` }}
+    ></iframe>
+  ) : (
+    <video
+      className={styles.video}
+      controls
+      autoPlay
+      onEnded={() => setIsControlsVisible(true)}
+    >
+      <source src={videoUrl} type="video/mp4" />
+    </video>
+  );
+
   return createPortal(
     <div
-      className={`overlay ${isVisible ? "visible" : ""}`}
+      className={`${styles.overlay} ${isVisible ? styles.overlayVisible : ""}`}
       onClick={handleClose}
     >
       <div
@@ -99,25 +119,16 @@ export default function Player({ onClose, title }: PlayerProps) {
           isVisible ? styles.playerVisible : ""
         }`}
         onClick={(e) => e.stopPropagation()}
-        onMouseMove={showTitleAndAutoHide}
+        onMouseMove={showControlsAndAutoHide}
       >
         <div className={styles.content}>
-          <video
-            ref={videoRef}
-            className={styles.video}
-            controls
-            autoPlay
-            onEnded={() => setIsTitleVisible(true)}
-            style={{ filter: `brightness(${brightness})` }}
-          >
-            <source src="/TRAILER.mp4" type="video/mp4" />
-          </video>
+          {playerContent}
 
           {isLocked && <div className={styles.lockOverlay} />}
 
           <button
             className={`${styles.toggleLockButton} ${
-              !isTitleVisible && !isLocked ? styles.controlHidden : ""
+              !isControlsVisible && !isLocked ? styles.controlHidden : ""
             }`}
             onClick={toggleLock}
           >
@@ -131,15 +142,14 @@ export default function Player({ onClose, title }: PlayerProps) {
 
             <div
               className={`${styles.title} ${
-                !isTitleVisible ? styles.controlHidden : ""
+                !isControlsVisible ? styles.controlHidden : ""
               }`}
             >
               <h4>{title}</h4>
             </div>
-
             <div
               className={`${styles.brightnessControl} ${
-                !isTitleVisible ? styles.controlHidden : ""
+                !isControlsVisible ? styles.controlHidden : ""
               }`}
             >
               <FaSun />
