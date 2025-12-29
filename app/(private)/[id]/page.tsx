@@ -1,50 +1,73 @@
-import { MovieProps } from "../../types";
 import styles from "./Film.module.scss";
 import TrendingPeople from "@/components/TrendingPeople";
 import FilmDetails from "./FilmDetails";
 import SimilarMovies from "@/components/SimilarMovies";
+import {
+  getMovieDetails,
+  getSimilarMovies,
+  getTrendingPeople,
+  getMovieVideos,
+} from "@/lib/movies";
+import { getSession } from "@/lib/session";
+import { notFound } from "next/navigation";
 
-async function getMovieDetails(id: string): Promise<MovieProps> {
-  const baseUrl = `https://api.themoviedb.org/3/movie/${id}`;
-  if (!process.env.NEXT_PUBLIC_API_KEY) {
-    throw new Error("API_KEY não encontrada");
+export default async function Film({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const session = await getSession();
+  const sessionId = session.session_id;
+
+  const [
+    movieResponse,
+    similarMoviesResponse,
+    trendingPeopleResponse,
+    videosResponse,
+  ] = await Promise.all([
+    getMovieDetails(id, sessionId),
+    getSimilarMovies(id),
+    getTrendingPeople(),
+    getMovieVideos(id),
+  ]);
+
+  if (!movieResponse.success) {
+    return notFound();
   }
-  const params = new URLSearchParams({
-    api_key: process.env.NEXT_PUBLIC_API_KEY,
-    language: "pt-BR",
-  });
+  const movie = movieResponse.data;
 
-  const response = await fetch(`${baseUrl}?${params.toString()}`);
-  if (!response.ok) {
-    const errorBody = await response.json().catch(() => null);
-    console.error("API Error Response:", errorBody);
-    let errorMessage = `Erro ao buscar detalhes do filme. Status: ${response.status}.`;
-    if (errorBody && errorBody.status_message) {
-      errorMessage += ` Mensagem: ${errorBody.status_message}`;
-    } else {
-      errorMessage += ` Mensagem: ${response.statusText}. Verifique se a chave da API (NEXT_PUBLIC_API_KEY) está configurada corretamente.`;
-    }
-    throw new Error(errorMessage);
-  }
+  const similarMovies = similarMoviesResponse.success
+    ? similarMoviesResponse.data
+    : [];
+  const trendingPeople = trendingPeopleResponse.success
+    ? trendingPeopleResponse.data
+    : [];
+  const videos = videosResponse.success ? videosResponse.data : [];
 
-  const data = await response.json();
-  return data;
-}
+  const officialTrailer =
+    videos.find(
+      (v) => v.type === "Trailer" && v.site === "YouTube" && v.official
+    ) ||
+    videos.find((v) => v.type === "Trailer" && v.site === "YouTube") ||
+    null;
 
-export default async function Film(props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const movie = await getMovieDetails(params.id);
+  const isFavorite = movie.account_states?.favorite || false;
 
   return (
     <div className={styles.filmContainer}>
       <div className={styles.mainContent}>
-        <FilmDetails movie={movie} />
+        <FilmDetails
+          movie={movie}
+          isFavorite={isFavorite}
+          videoKey={officialTrailer?.key}
+        />
         <div className={styles.similarSection}>
-          <SimilarMovies movieId={params.id} />
+          <SimilarMovies movies={similarMovies} />
         </div>
       </div>
       <aside className={styles.sidebar}>
-        <TrendingPeople />
+        <TrendingPeople people={trendingPeople} />
       </aside>
     </div>
   );

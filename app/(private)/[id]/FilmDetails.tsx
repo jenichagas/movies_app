@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { MovieProps } from "../../types";
 import styles from "./Film.module.scss";
 import { FaRegStar } from "react-icons/fa";
@@ -12,119 +13,121 @@ import { formatRuntime } from "@/utils/formatRuntime";
 import { getRating } from "@/utils/getRating";
 import FavButton from "@/components/FavButton";
 import ButtonPlay from "@/components/ButtonPlay/ButtonPlay";
-import { useFavorites } from "@/contexts/FavoriteContext";
+import Player from "@/components/Player";
 
 interface FilmDetailsProps {
   movie: MovieProps;
+  isFavorite: boolean;
+  videoKey?: string;
 }
 
-export default function FilmDetails({ movie }: FilmDetailsProps) {
+export default function FilmDetails({ movie, isFavorite, videoKey }: FilmDetailsProps) {
+  const [isPlayerOpen, setIsPlayerOpen] = useState(false);
   const imageBaseUrl = "https://image.tmdb.org/t/p/original";
   const formattedRuntime = formatRuntime(movie.runtime);
   const rating = getRating(movie.genres);
-
-  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
-  const isFav = isFavorite(movie.id);
-
-  const handleFavClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (isFav) {
-      removeFavorite(movie.id);
-    } else {
-      addFavorite(movie);
-    }
-  };
-
+  console.log("key:", videoKey);
   return (
-    <div className={styles.topContent}>
-      <div className={styles.poster}>
-        <Image
-          src={`${imageBaseUrl}${movie.poster_path}`}
-          alt={movie.title}
-          width={500}
-          height={750}
+    <>
+      {isPlayerOpen && videoKey && (
+        <Player
+          onClose={() => setIsPlayerOpen(false)}
+          title={movie.title}
+          videoUrl={`https://www.youtube.com/embed/${videoKey}`}
         />
-        <div className={styles.download}>
-          <ButtonDownload />
-        </div>
-      </div>
-      <div className={styles.details}>
-        <div className={styles.titleRow}>
-          <div>
-            <h3>
-              {movie.title}{" "}
-              {movie.adult && <span className={styles.adultBadge}>+18</span>}
-            </h3>
-          </div>
-          <div className={styles.favContainer}>
-            <FavButton
-              isFavorite={isFav}
-              onClick={handleFavClick}
-              showText={true}
-            />
+      )}
+      <div className={styles.topContent}>
+        <div className={styles.poster}>
+          <Image
+            src={`${imageBaseUrl}${movie.poster_path}`}
+            alt={movie.title}
+            width={500}
+            height={750}
+          />
+          <div className={styles.download}>
+            <ButtonDownload />
           </div>
         </div>
+        <div className={styles.details}>
+          <div className={styles.titleRow}>
+            <div>
+              <h3>
+                {movie.title}{" "}
+                {movie.adult && <span className={styles.adultBadge}>+18</span>}
+              </h3>
+            </div>
+            <div className={styles.favContainer}>
+              <FavButton
+                mediaId={String(movie.id)}
+                mediaType="movie"
+                isFavorite={isFavorite}
+                showText={true}
+              />
+            </div>
+          </div>
 
-        {movie.tagline && <p className={styles.tagline}>{movie.tagline}</p>}
-        <p className={styles.overview}>{movie.overview}</p>
-        <div className={styles.companies}>
-          {movie.production_companies?.map(
-            (company) =>
-              company.logo_path && (
-                <Image
-                  key={company.id}
-                  src={`${imageBaseUrl}${company.logo_path}`}
-                  alt={company.name}
-                  width={100}
-                  height={50}
-                />
-              )
-          )}
-        </div>
-        <div className={styles.info}>
-          {rating && (
-            <span
-              className={`${styles.ratingBadge} ${styles[`rating${rating}`]}`}
-            >
-              {rating}
-            </span>
-          )}
-          <span>
-            <FaRegStar className={styles.rating} /> Nota:{" "}
-            {movie.vote_average.toFixed(1)}
-          </span>
-          <span>
-            <IoCalendarOutline className={styles.rating} />
-            Lançamento:{" "}
-            {new Date(movie.release_date).toLocaleDateString("pt-BR", {
-              timeZone: "UTC",
-            })}
-          </span>
-          {formattedRuntime && (
-            <span>
-              <MdOutlineTimer className={styles.rating} /> {formattedRuntime}
-            </span>
-          )}
-        </div>
-        {movie.genres && (
-          <div className={styles.genres}>
-            {movie.genres.map((genre) => (
-              <span key={genre.id} className={styles.genre}>
-                {genre.name}
-              </span>
-            ))}
+          {movie.tagline && <p className={styles.tagline}>{movie.tagline}</p>}
+          <p className={styles.overview}>{movie.overview}</p>
+          <div className={styles.companies}>
+            {movie.production_companies?.map(
+              (company) =>
+                company.logo_path && (
+                  <Image
+                    key={company.id}
+                    src={`${imageBaseUrl}${company.logo_path}`}
+                    alt={company.name}
+                    width={100}
+                    height={50}
+                  />
+                )
+            )}
           </div>
-        )}
-        <div className={styles.actions}>
-          <button className={styles.trailerButton}>
-            {" "}
-            <PiFilmSlateFill /> Ver trailer
-          </button>
-          <div>
-            <ButtonPlay />
+          <div className={styles.info}>
+            {rating && (
+              <span
+                className={`${styles.ratingBadge} ${styles[`rating${rating}`]}`}
+              >
+                {rating}
+              </span>
+            )}
+            <span>
+              <FaRegStar className={styles.rating} /> Nota:{" "}
+              {movie.vote_average.toFixed(1)}
+            </span>
+            <span>
+              <IoCalendarOutline className={styles.rating} />
+              Lançamento:{" "}
+              {new Date(movie.release_date).toLocaleDateString("pt-BR", {
+                timeZone: "UTC",
+              })}
+            </span>
+            {formattedRuntime && (
+              <span>
+                <MdOutlineTimer className={styles.rating} /> {formattedRuntime}
+              </span>
+            )}
+          </div>
+          {movie.genres && (
+            <div className={styles.genres}>
+              {movie.genres.map((genre) => (
+                <span key={genre.id} className={styles.genre}>
+                  {genre.name}
+                </span>
+              ))}
+            </div>
+          )}
+          <div className={styles.actions}>
+            {videoKey && (
+              <button className={styles.trailerButton} onClick={() => setIsPlayerOpen(true)}>
+                <PiFilmSlateFill /> Ver trailer
+              </button>
+            )}
+            <div>
+              <ButtonPlay />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
