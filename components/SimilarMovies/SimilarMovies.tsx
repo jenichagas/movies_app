@@ -1,42 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { MovieProps } from "@/app/types";
 import MovieCard from "../MovieCard";
 import styles from "./SimilarMovies.module.scss";
-import MovieCarousel from "../MovieCarousel/Skeleton/MovieCarouselSkeleton";
 
 interface SimilarMoviesProps {
-  movieId: string;
+  movies: MovieProps[];
 }
 
-export default function SimilarMovies({ movieId }: SimilarMoviesProps) {
-  const [similarMovies, setSimilarMovies] = useState<MovieProps[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchSimilarMovies() {
-      setLoading(true);
-      try {
-        const response = await fetch(`/api/similar-movies?movieId=${movieId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch similar movies");
-        }
-        const data = await response.json();
-        setSimilarMovies(data.results);
-
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    if (movieId) {
-      fetchSimilarMovies();
-    }
-  }, [movieId]);
-
+export default function SimilarMovies({ movies }: SimilarMoviesProps) {
   const settings = {
     dots: false,
     infinite: true,
@@ -55,15 +27,7 @@ export default function SimilarMovies({ movieId }: SimilarMoviesProps) {
     ],
   };
 
-  if (loading) {
-    return (
-      <div>
-        <MovieCarousel />
-      </div>
-    );
-  }
-
-  if (similarMovies.length === 0) {
+  if (!movies || movies.length === 0) {
     return (
       <div className={styles.similarMoviesContainer}>
         <h2>VOCÊ TAMBÉM PODE GOSTAR</h2>
@@ -76,7 +40,7 @@ export default function SimilarMovies({ movieId }: SimilarMoviesProps) {
     <div className={styles.similarMoviesContainer}>
       <h2>VOCÊ TAMBÉM PODE GOSTAR</h2>
       <Slider {...settings}>
-        {similarMovies.slice(0, 10).map((movie) => (
+        {movies.slice(0, 10).map((movie) => (
           <div key={movie.id} className={styles.slide}>
             <MovieCard
               movie={movie}
