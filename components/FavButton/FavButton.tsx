@@ -1,33 +1,63 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+import { useTransition } from "react";
+import { toast } from "sonner";
+import { toggleFavoriteAction } from "@/lib/fav-actions";
 import styles from "./FavButton.module.scss";
 import clsx from "clsx";
 
 interface FavButtonProps {
+  mediaId: string;
+  mediaType: "movie" | "tv";
   isFavorite: boolean;
-  onClick: (e: React.MouseEvent) => void;
   fontSize?: string;
   showText?: boolean;
   className?: string;
 }
 
 export default function FavButton({
+  mediaId,
+  mediaType,
   isFavorite,
-  onClick,
   fontSize,
   showText = true,
   className,
 }: FavButtonProps) {
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
+
+  const handleToggle = async () => {
+    const formData = new FormData();
+    formData.append("mediaId", mediaId);
+    formData.append("mediaType", mediaType);
+    formData.append("isCurrentlyFavorite", String(isFavorite));
+    formData.append("pathname", pathname);
+
+    startTransition(async () => {
+      const result = await toggleFavoriteAction(formData);
+
+      if (result?.success) {
+        toast.success(result.message);
+      } else if (result?.success === false) {
+        toast.error(result.error);
+      }
+    });
+  };
+
   const containerClasses = clsx(styles.container, className, {
     [styles.noText]: !showText,
   });
 
   return (
     <button
+      onClick={handleToggle}
       className={containerClasses}
-      onClick={onClick}
       data-favorite={isFavorite}
-      aria-label={isFavorite ? "Remover dos Favoritos" : "Adicionar aos Favoritos"}
+      disabled={isPending}
+      aria-label={
+        isFavorite ? "Remover dos Favoritos" : "Adicionar aos Favoritos"
+      }
     >
       <svg
         className="feather feather-heart"
@@ -45,8 +75,12 @@ export default function FavButton({
       </svg>
       {showText && (
         <div className={styles.action} style={{ fontSize: fontSize }}>
-          <span className={styles.option1}>Adicionar à minha lista</span>
-          <span className={styles.option2}>Remover da minha lista</span>
+          <span className={styles.option1}>
+            {isPending ? "Carregando..." : "Adicionar à minha lista"}
+          </span>
+          <span className={styles.option2}>
+            {isPending ? "Carregando..." : "Remover da minha lista"}
+          </span>
         </div>
       )}
     </button>
