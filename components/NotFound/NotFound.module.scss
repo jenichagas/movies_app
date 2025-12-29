@@ -3,10 +3,25 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 4rem;
   text-align: center;
   height: 100vh;
+  border-top: 1px solid var(--border-purple-color);
+  position: relative;
+  z-index: 1;
 
+  &::before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/blob-pink.svg");
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.2;
+  }
 
   p {
     margin-top: 1rem;
