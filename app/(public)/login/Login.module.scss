@@ -1,0 +1,134 @@
+.loginPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--background-color);
+  padding: 2rem 1rem;
+  z-index: 1;
+  position: relative;
+}
+
+.loginPage::before {
+  content: "";
+  background-image: url("/background-login.jpg");
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+.loginCard {
+  background-color: #29052b80;
+  backdrop-filter: blur(30px);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  border-radius: 25px;
+  border: 1px solid var(--border-purple-color);
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  padding: 3rem 2.5rem;
+}
+
+.logoContainer {
+  margin-bottom: 2rem;
+  margin: 0 auto;
+  width: 150px;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--font-gray-color);
+  }
+
+  input {
+    background-color: transparent;
+    border: 1px solid var(--border-gray-color);
+    color: var(--white-color);
+    padding: 0.8rem 1rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 3px rgba(225, 7, 72, 0.2);
+    }
+
+    &::placeholder {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.loginButton {
+  background-color: var(--secondary-color);
+  padding: 0.9rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.6s;
+  margin-top: 1rem;
+
+  &:hover {
+    background-color: var(--secondary-color-hover);
+  }
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+
+  a {
+    color: var(--font-gray-color);
+    transition: color 0.6s;
+
+    &:hover {
+      color: var(--secondary-color);
+    }
+  }
+}
+
+.separator {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--font-gray-color);
+
+  &::before,
+  &::after {
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--border-gray-color);
+  }
+}
