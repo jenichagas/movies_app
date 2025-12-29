@@ -17,6 +17,12 @@ export interface MovieProps {
     name: string;
     logo_path: string | null;
   }[];
+  is_favorite?: boolean;
+  account_states?: {
+    favorite: boolean;
+    rated: boolean | { value: number };
+    watchlist: boolean;
+  };
 }
 
 export interface Genre {
@@ -24,15 +30,47 @@ export interface Genre {
   name: string;
 }
 
+export interface Person {
+  id: number;
+  name: string;
+  profile_path: string;
+}
+
+export interface Video {
+  id: string;
+  iso_639_1: string;
+  iso_3166_1: string;
+  key: string;
+  name: string;
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  published_at: string;
+}
+
 export interface ApiMovieResponse {
   page: number;
-  results: MovieProps[];
+  results: MovieProps[] ;
   total_pages: number;
   total_results: number;
 }
+
+export interface ApiVideoResponse {
+  id: number;
+  results: Video[];
+}
+
 export interface ApiSeriesResponse {
   page: number;
   results: MovieProps[];
   total_pages: number;
   total_results: number;
+}
+
+export interface SessionData {
+  request_token?: string;
+  session_id?: string;
+  account_id?: string;
+  isLoggedIn?: boolean;
 }
