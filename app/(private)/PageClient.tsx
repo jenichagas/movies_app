@@ -1,91 +1,45 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import type { MovieProps, Genre } from "@/app/types";
 import HeroSection from "@/components/HeroSection";
 import NotFound from "@/components/NotFound";
-import {
-  getPopulateMovies,
-  searchMovies,
-  getPopularMovies,
-  getTvSeries,
-  getUpcomingMovies,
-} from "./page";
 import MenuList from "@/components/MenuList";
 import styles from "./PageClient.module.scss";
 import CategorieList from "@/components/CategoriesList";
 import MovieGrid from "@/components/MovieGrid";
 
 interface PageClientProps {
-  initialMovies: MovieProps[];
+  movies: MovieProps[];
   genres: Genre[];
   initialActiveMenu: string;
+  searchQuery?: string;
 }
 
 export default function PageClient({
-  initialMovies,
+  movies,
   genres,
   initialActiveMenu,
+  searchQuery,
 }: PageClientProps) {
-  const [movies, setMovies] = useState<MovieProps[]>(initialMovies);
-  const [hasSearched, setHasSearched] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(initialActiveMenu);
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const searchParams = useSearchParams();
-  const categoryId = searchParams.get("category");
-
-  useEffect(() => {
-    const fetchMoviesByCategory = async () => {
-      if (categoryId) {
-        const moviesData = await getPopulateMovies(categoryId);
-        setMovies(moviesData);
-        setHasSearched(false);
-        setActiveMenu("");
-      }
-    };
-
-    fetchMoviesByCategory();
-  }, [categoryId]);
-
-  const handleSearch = async (query: string) => {
-    const trimmedQuery = query.trim();
-    setHasSearched(trimmedQuery !== "");
-    setActiveMenu(trimmedQuery ? "" : "filmes");
-
-    let moviesData: MovieProps[] = [];
-    if (trimmedQuery !== "") {
-      moviesData = await searchMovies(trimmedQuery);
-    } else {
-      moviesData = await getPopulateMovies();
+  const handleNavigation = (params: Record<string, string>) => {
+    const url = new URL(pathname, window.location.origin);
+    for (const [key, value] of Object.entries(params)) {
+      url.searchParams.set(key, value);
     }
-    setMovies(moviesData);
+    router.push(url.toString());
   };
 
-  const handleFilmesClick = async () => {
-    const moviesData = await getPopulateMovies();
-    setMovies(moviesData);
-    setHasSearched(false);
-    setActiveMenu("filmes");
-  };
-
-  const handlePopularClick = async () => {
-    const moviesData = await getPopularMovies();
-    setMovies(moviesData);
-    setHasSearched(false);
-    setActiveMenu("popular");
-  };
-  const handleSeriesClick = async () => {
-    const moviesData = await getTvSeries();
-    setMovies(moviesData);
-    setHasSearched(false);
-    setActiveMenu("series");
-  };
-  const handleUpcomingClick = async () => {
-    const moviesData = await getUpcomingMovies();
-    setMovies(moviesData);
-    setHasSearched(false);
-    setActiveMenu("em breve");
+  const handleSearch = (query: string) => {
+    const trimmedQuery = query.trim();
+    if (trimmedQuery) {
+      handleNavigation({ q: trimmedQuery });
+    } else {
+      handleNavigation({ type: "discover" });
+    }
   };
 
   return (
@@ -93,11 +47,11 @@ export default function PageClient({
       <div className={styles.menuList}>
         <MenuList
           onSearch={handleSearch}
-          onFilmesClick={handleFilmesClick}
-          onPopularClick={handlePopularClick}
-          onSeriesClick={handleSeriesClick}
-          onUpcomingClick={handleUpcomingClick}
-          activeItem={activeMenu}
+          onFilmesClick={() => handleNavigation({ type: "discover" })}
+          onPopularClick={() => handleNavigation({ type: "popular" })}
+          onSeriesClick={() => handleNavigation({ type: "series" })}
+          onUpcomingClick={() => handleNavigation({ type: "upcoming" })}
+          activeItem={initialActiveMenu}
         />
       </div>
       <div>
@@ -107,8 +61,8 @@ export default function PageClient({
         <CategorieList genres={genres} />
       </div>
       <div>
-        {hasSearched && movies.length === 0 ? (
-          <NotFound />
+        {searchQuery && movies.length === 0 ? (
+          <NotFound height="30vh" />
         ) : (
           <MovieGrid movies={movies} />
         )}
