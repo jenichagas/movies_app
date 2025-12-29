@@ -2,6 +2,7 @@
   background: var(--secondary-color);
   opacity: 1;
   transition: all 0.3s ease-in-out;
+  border-radius: 18px;
   &:hover {
     opacity: 0.6;
   }
