@@ -1,54 +1,29 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
-import { useFavorites } from "@/contexts/FavoriteContext";
+import { useState, useMemo } from "react";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import { MovieProps, Genre } from "../../types";
+import { MovieProps, Genre } from "@/app/types";
 import styles from "./MyList.module.scss";
 import { FaList, FaTh } from "react-icons/fa";
 import MovieListItem from "@/components/MovieListItem/MovieListItem";
-import { useToast } from "@/contexts/ToastContext";
 import MovieCarousel from "@/components/MovieCarousel";
-import MovieCarouselSkeleton from "@/components/MovieCarousel/Skeleton";
 import EmptyState from "@/components/EmptyState";
 
-export default function MyListPageClient() {
-  const { favorites } = useFavorites();
+interface MyListPageClientProps {
+  movies: MovieProps[];
+  genres: Genre[];
+}
+
+export default function MyListPageClient({ movies: favoriteMovies, genres }: MyListPageClientProps) {
   const [view, setView] = useState("grid");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [genreMap, setGenreMap] = useState<Record<number, string>>({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [isClient, setIsClient] = useState(false);
-  const { showToast } = useToast();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    const fetchGenres = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch("/api/genres");
-        if (!res.ok) throw new Error("Failed to fetch genres");
-        const genres: Genre[] = await res.json();
-        const newGenreMap = genres.reduce((acc, genre) => {
-          acc[genre.id] = genre.name;
-          return acc;
-        }, {} as Record<number, string>);
-        setGenreMap(newGenreMap);
-      } catch (error) {
-        console.error(error);
-        showToast("Erro ao carregar gêneros", {
-          description: "Tente novamente mais tarde",
-          type: "error",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchGenres();
-  }, [showToast]);
+  const genreMap = useMemo(() => {
+    return genres.reduce((acc, genre) => {
+      acc[genre.id] = genre.name;
+      return acc;
+    }, {} as Record<number, string>);
+  }, [genres]);
 
   const getGenresFromIds = (genreIds: number[] | undefined): string[] => {
     if (!genreIds || Object.keys(genreMap).length === 0) return [];
@@ -56,20 +31,20 @@ export default function MyListPageClient() {
   };
 
   const categories = useMemo(() => {
-    const allGenres = favorites.flatMap((movie) =>
+    const allGenres = favoriteMovies.flatMap((movie) =>
       getGenresFromIds(movie.genre_ids)
     );
     return ["all", ...Array.from(new Set(allGenres))];
-  }, [favorites, genreMap]);
+  }, [favoriteMovies, genreMap]);
 
   const filteredMovies = useMemo(() => {
     if (selectedCategory === "all") {
-      return favorites;
+      return favoriteMovies;
     }
-    return favorites.filter((movie) =>
+    return favoriteMovies.filter((movie) =>
       getGenresFromIds(movie.genre_ids).includes(selectedCategory)
     );
-  }, [favorites, selectedCategory, genreMap]);
+  }, [favoriteMovies, selectedCategory, genreMap]);
 
   const moviesByCategory = useMemo(() => {
     if (selectedCategory !== "all") {
@@ -80,7 +55,7 @@ export default function MyListPageClient() {
     }
 
     const initialValue: Record<string, MovieProps[]> = {};
-    return favorites.reduce((acc, movie) => {
+    return favoriteMovies.reduce((acc, movie) => {
       const movieGenres = getGenresFromIds(movie.genre_ids);
       movieGenres.forEach((genreName) => {
         if (!acc[genreName]) {
@@ -90,25 +65,9 @@ export default function MyListPageClient() {
       });
       return acc;
     }, initialValue);
-  }, [favorites, filteredMovies, selectedCategory, genreMap]);
+  }, [favoriteMovies, filteredMovies, selectedCategory, genreMap]);
 
-  if (!isClient || isLoading) {
-    return (
-      <div className={styles.myListPage}>
-        <header className={styles.header}>
-          <div className={styles.titleWrapper}>
-            <h1>Minha Lista</h1>
-            <p>Filmes e séries que você salvou para assistir mais tarde.</p>
-          </div>
-        </header>
-        <main className={styles.content}>
-          <MovieCarouselSkeleton />
-        </main>
-      </div>
-    );
-  }
-
-  if (favorites.length === 0) {
+  if (favoriteMovies.length === 0) {
     return (
       <EmptyState
         message="Sua lista ainda está vazia..."
