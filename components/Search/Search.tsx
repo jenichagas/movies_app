@@ -1,7 +1,8 @@
 "use client";
 import styles from "./Search.module.scss";
 import { IoSearch } from "react-icons/io5";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { IoClose } from "react-icons/io5";
 
 interface SearchProps {
   onSearch: (query: string) => void;
@@ -10,6 +11,7 @@ interface SearchProps {
 export default function Search({ onSearch }: SearchProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSearch = () => {
     onSearch(query);
@@ -21,6 +23,18 @@ export default function Search({ onSearch }: SearchProps) {
     }
   };
 
+  const clearSearch = () => {
+    setQuery("");
+    onSearch("");
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen]);
+
   return (
     <div
       className={`${styles.searchContainer} ${isOpen ? styles.searchOpen : ""}`}
@@ -31,9 +45,10 @@ export default function Search({ onSearch }: SearchProps) {
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         onKeyDown={handleKeyDown}
+        ref={inputRef}
       />
       <div className={styles.searchIcon} onClick={() => setIsOpen(!isOpen)}>
-        <IoSearch />
+        {isOpen ? <IoClose onClick={clearSearch} /> : <IoSearch />}
       </div>
     </div>
   );
