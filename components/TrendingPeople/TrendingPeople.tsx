@@ -1,40 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import styles from "./TrendingPeople.module.scss";
 import Image from "next/image";
-import TrendingPeopleSkeleton from "./Skeleton/TrendingPeopleSkeleton";
+import { Person } from "@/app/types";
 
-interface Person {
-  id: number;
-  name: string;
-  profile_path: string;
+interface TrendingPeopleProps {
+  people: Person[];
 }
 
-export default function TrendingPeople() {
-  const [people, setPeople] = useState<Person[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchTrendingPeople() {
-      setLoading(true);
-      try {
-        const response = await fetch(`/api/trending-people`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch trending people");
-        }
-        const data = await response.json();
-        setPeople(data.results);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchTrendingPeople();
-  }, []);
-
+export default function TrendingPeople({ people }: TrendingPeopleProps) {
   const settings = {
     dots: false,
     infinite: true,
@@ -53,19 +27,15 @@ export default function TrendingPeople() {
     ],
   };
 
-  if (loading) {
-    return <TrendingPeopleSkeleton />;
-  }
-
   if (!people || people.length === 0) {
-    return null;
+    return null; // Ou um skeleton/placeholder se preferir
   }
 
   const imageBaseUrl = "https://image.tmdb.org/t/p/w185";
 
   return (
     <div className={styles.peopleContainer}>
-      <h3> Artistas Populares</h3>
+      <h3>Artistas Populares</h3>
       <Slider {...settings}>
         {people
           .filter((person) => person.profile_path)
