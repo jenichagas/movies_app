@@ -29,10 +29,10 @@ export default function MenuList({
 
   useEffect(() => {
     const refs = {
-      filmes: filmesRef,
+      discover: filmesRef, 
       series: seriesRef,
       popular: popularRef,
-      "em breve": upcomingRef,
+      upcoming: upcomingRef, 
     };
 
     const activeKey = activeItem as keyof typeof refs;
@@ -60,7 +60,7 @@ export default function MenuList({
         <div
           ref={filmesRef}
           className={`${styles.menuItem} ${
-            activeItem === "filmes" ? styles.active : ""
+            activeItem === "discover" ? styles.active : "" 
           }`}
           onClick={onFilmesClick}
         >
@@ -87,7 +87,7 @@ export default function MenuList({
         <div
           ref={upcomingRef}
           className={`${styles.menuItem} ${
-            activeItem === "em breve" ? styles.active : ""
+            activeItem === "upcoming" ? styles.active : "" 
           }`}
           onClick={onUpcomingClick}
         >
