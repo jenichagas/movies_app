@@ -1,32 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import { MovieProps } from "@/app/types";
 import styles from "./MovieListItem.module.scss";
 import Link from "next/link";
 import StarRating from "../StarRating";
 import FavButton from "../FavButton";
-import { useFavorites } from "@/contexts/FavoriteContext";
 import { IoCalendarOutline } from "react-icons/io5";
 import { MdOutlineTimer } from "react-icons/md";
 import { formatRuntime } from "@/utils/formatRuntime";
+import { formatDate } from "@/utils/formatDate";
 
 interface MovieListItemProps {
   movie: MovieProps;
 }
 
 export default function MovieListItem({ movie }: MovieListItemProps) {
-  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
-  const isFav = isFavorite(movie.id);
+  const isFav = movie.is_favorite || false;
   const formattedRuntime = formatRuntime(movie.runtime);
-
-  const handleFavClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (isFav) {
-      removeFavorite(movie.id);
-    } else {
-      addFavorite(movie);
-    }
-  };
 
   return (
     <div className={styles.movieListItem}>
@@ -54,10 +45,7 @@ export default function MovieListItem({ movie }: MovieListItemProps) {
         <div className={styles.info}>
           <span>
             <IoCalendarOutline />
-            Lançamento:{" "}
-            {new Date(movie.release_date).toLocaleDateString("pt-BR", {
-              timeZone: "UTC",
-            })}
+            Lançamento: {formatDate(movie.release_date)}
           </span>
           {formattedRuntime && (
             <span>
@@ -68,7 +56,8 @@ export default function MovieListItem({ movie }: MovieListItemProps) {
         <p className={styles.overview}>{movie.overview || "Sem sinopse"}</p>
         <div className={styles.actions}>
           <FavButton
-            onClick={handleFavClick}
+            mediaId={movie.id}
+            mediaType="movie"
             isFavorite={isFav}
             showText={true}
           />
