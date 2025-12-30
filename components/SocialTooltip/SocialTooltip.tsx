@@ -1,9 +1,6 @@
-"use client";
-
 import styles from "./SocialTooltip.module.scss";
 import {
   FaInstagram,
-  FaLinkedinIn,
   FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
@@ -15,12 +12,6 @@ export default function SocialTooltip() {
         <p className={styles.iconName}>Instagram</p>
         <div className={`${styles.icon} ${styles.insta}`}>
           <FaInstagram size={25} />
-        </div>
-      </div>
-      <div className={`${styles.iconWrapper} ${styles.linkedin}`}>
-        <p className={styles.iconName}>Linkedin</p>
-        <div className={`${styles.icon} ${styles.link}`}>
-          <FaLinkedinIn size={25} />
         </div>
       </div>
       <div className={`${styles.iconWrapper} ${styles.whatsapp}`}>
