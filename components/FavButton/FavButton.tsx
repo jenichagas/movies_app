@@ -38,11 +38,12 @@ export default function FavButton({
       const result = await toggleFavoriteAction(formData);
 
       if (result?.success) {
-        toast.success(result.message);
+        toast.success(result.data);
       } else if (result?.success === false) {
         toast.error(result.error);
       }
     });
+    
   };
 
   const containerClasses = clsx(styles.container, className, {
