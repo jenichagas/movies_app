@@ -1,18 +1,10 @@
-"use client"
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
-import { MovieProps } from "../app/types";
+"use client";
+import { createContext, useContext, ReactNode } from "react";
 
+// Interface vazia por enquanto. No futuro, pode ser usada para
+// atualizações otimistas ou para passar o session_id do usuário.
 interface FavoriteContextType {
-  favorites: MovieProps[];
-  addFavorite: (movie: MovieProps) => void;
-  removeFavorite: (movieId: string) => void;
-  isFavorite: (movieId: string) => boolean;
+  // Exemplo: optimisticToggleFavorite: (movieId: string) => void;
 }
 
 const FavoritesContext = createContext<FavoriteContextType | undefined>(
@@ -20,36 +12,15 @@ const FavoritesContext = createContext<FavoriteContextType | undefined>(
 );
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
-  const [favorites, setFavorites] = useState<MovieProps[]>([]);
-  useEffect(() => {
-    const storedFavorites = localStorage.getItem("cinebox-favorites");
-    if (storedFavorites) {
-      setFavorites(JSON.parse(storedFavorites));
-    }
-  }, []);
+  // Toda a lógica de useState e useEffect foi removida.
+  // O estado agora é gerenciado no servidor.
 
-  useEffect(() => {
-    localStorage.setItem("cinebox-favorites", JSON.stringify(favorites));
-  }, [favorites]);
-
-  const addFavorite = (movie: MovieProps) => {
-    setFavorites((prevFavorites) => [...prevFavorites, movie]);
-  };
-
-  const removeFavorite = (movieId: string) => {
-    setFavorites((prevFavorites) =>
-      prevFavorites.filter((movie) => movie.id !== movieId)
-    );
-  };
-
-  const isFavorite = (movieId: string) => {
-    return favorites.some((movie) => movie.id === movieId);
+  const value = {
+    // A implementação de funções (como atualizações otimistas) entraria aqui.
   };
 
   return (
-    <FavoritesContext.Provider
-      value={{ favorites, addFavorite, removeFavorite, isFavorite }}
-    >
+    <FavoritesContext.Provider value={value}>
       {children}
     </FavoritesContext.Provider>
   );
